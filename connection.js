@@ -1,7 +1,5 @@
 // Real-time connection system for game.html
 
-import { updateGameFromHostData } from './app.js';
-
 let connectionState = {
     role: null, // 'host' or 'guest'
     name: '',

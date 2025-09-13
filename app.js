@@ -2000,28 +2000,4 @@ function showLastDiceResult() {
     }
 }
 
-// Function to update the entire game state based on host's data
-function updateGameFromHostData(hostGameState) {
-    console.log("Updating game state from host:", hostGameState);
-
-    // Update the local game state with the received state
-    Object.assign(gameState, hostGameState);
-    
-    // Call the rendering functions to refresh the UI
-    renderPlayers();
-    renderChallenges();
-    updateCurrentChallengeDisplay();
-    renderRoundsLog();
-    renderPlayerLevels();
-
-    // Reapply theme and language in case they were changed by the host
-    applyTheme(gameState.isDarkMode);
-    setLanguage(gameState.currentLanguage);
-}
-
-// Ensure the function is accessible globally or exported if needed
-window.updateGameFromHostData = updateGameFromHostData;
-// Add this line at the very end of app.js
-export { updateGameFromHostData }; 
-
 init();

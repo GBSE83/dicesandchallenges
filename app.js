@@ -2021,5 +2021,7 @@ function updateGameFromHostData(hostGameState) {
 
 // Ensure the function is accessible globally or exported if needed
 window.updateGameFromHostData = updateGameFromHostData;
+// Add this line at the very end of app.js
+export { updateGameFromHostData }; 
 
 init();

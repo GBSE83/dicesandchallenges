@@ -130,8 +130,8 @@ function initGuestConnection() {
         connectionState.hostConnection.on('data', data => {
             if (data.type === 'game-state-update') {
                 console.log("Received game state from host.");
-                // AGREGAR ESTA LÍNEA DE CÓDIGO
-                updateGameFromHostData(data.gameState); 
+                // Update the game state with the received data
+                updateGameFromHostData(data.gameState);
             }
             if (data.type === 'host-ended-game') {
                 alert(data.message);

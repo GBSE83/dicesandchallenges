@@ -4,7 +4,6 @@ let connectionState = {
     name: '',
     accessCode: '',
     peer: null,
-    peerId: null,
     hostConnection: null,
     guestConnections: [],
     isConnected: false,
@@ -26,7 +25,6 @@ function initConnection() {
     connectionState.role = urlParams.get('role');
     connectionState.name = urlParams.get('name');
     connectionState.accessCode = urlParams.get('accessCode');
-    connectionState.peerId = urlParams.get('peerId');
     connectionState.language = urlParams.get('language') || 'es';
     connectionState.darkMode = urlParams.get('darkMode') === 'true';
     
@@ -69,8 +67,8 @@ function updateConnectionDisplay() {
 // Host connection
 function initHostConnection() {
     console.log("Initializing host connection...");
-    // Use the unique peerId for the host's Peer object
-    connectionState.peer = new Peer(connectionState.peerId, {
+    // Use the accessCode for the host's Peer object
+    connectionState.peer = new Peer(connectionState.accessCode, {
         host: 'peerjs-server.herokuapp.com',
         secure: true
     });

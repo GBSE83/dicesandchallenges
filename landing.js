@@ -177,9 +177,8 @@ function startHostGame() {
         return;
     }
     const accessCode = landingState.accessCode;
-    // Generate a unique Peer ID for the host
-    const peerId = `${accessCode}-${Math.random().toString(36).substring(2, 8)}`;
-    const url = `game.html?role=host&name=${encodeURIComponent(playerName)}&accessCode=${encodeURIComponent(accessCode)}&peerId=${encodeURIComponent(peerId)}&darkMode=${landingState.isDarkMode}&language=${landingState.currentLanguage}`;
+    // Redirect to game.html with accessCode, which will now also serve as the PeerID
+    const url = `game.html?role=host&name=${encodeURIComponent(playerName)}&accessCode=${encodeURIComponent(accessCode)}&darkMode=${landingState.isDarkMode}&language=${landingState.currentLanguage}`;
     window.location.href = url;
 }
 

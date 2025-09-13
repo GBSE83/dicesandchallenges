@@ -20,6 +20,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-icon"></path>
                     <circle cx="12" cy="12" r="5" class="sun-icon"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3" class="sun-icon"></line>
+                    <line x1="12" y1="21" x2="12" y2="23" class="sun-icon"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-icon"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-icon"></line>
+                    <line x1="1" y1="12" x2="3" y2="12" class="sun-icon"></line>
+                    <line x1="21" y1="12" x2="23" y2="12" class="sun-icon"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-icon"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-icon"></line>
                 </svg>
             </button>
         </div>
@@ -33,16 +41,14 @@
                     <button class="toggle-btn" data-target="config-body">-</button>
                 </div>
                 <div id="config-body" class="card-body">
-                    <div class="config-item">
+                    <div class="description-box">
                         <label for="game-title-input">Título del Juego:</label>
                         <input type="text" id="game-title-input" placeholder="Título del Juego">
-                    </div>
-                    <div class="config-item">
                         <label for="game-description">Descripción:</label>
                         <textarea id="game-description" placeholder="Añade una breve descripción del juego"></textarea>
                     </div>
-                    <div class="config-item">
-                        <label for="game-instructions">Instrucciones:</label>
+                    <div class="instructions-box">
+                         <label for="game-instructions">Instrucciones:</label>
                         <textarea id="game-instructions" placeholder="Añade instrucciones para los jugadores"></textarea>
                     </div>
                 </div>
@@ -96,8 +102,13 @@
                     <div class="dice-controls">
                         <label for="dice-max-value">Caras del dado:</label>
                         <input type="number" id="dice-max-value" value="6" min="2">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="allow-duplicate-rolls-checkbox">
+                            <label for="allow-duplicate-rolls-checkbox">Permitir tiradas repetidas</label>
+                        </div>
                     </div>
                     <button id="roll-dice-btn" class="btn btn-large" disabled>Lanzar Dados</button>
+                    <button id="show-last-result-btn" class="btn">Mostrar última tirada</button>
                 </div>
 
                 <div class="card-header">
@@ -115,13 +126,48 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="results-title">Resultados</h2>
+                <div class="modal-controls">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="auto-close-modal-checkbox">
+                        <label for="auto-close-modal-checkbox">Cierre automático</p>
+                    </div>
+                    <div id="auto-close-timer-container" style="display: none;">
+                        <label for="auto-close-timer">en</label>
+                        <input type="number" id="auto-close-timer" value="5" min="1" max="10">
+                        <p>segundos</p>
+                    </div>
+                </div>
                 <button type="button" class="close-button" id="close-dice-modal">×</button>
             </div>
-            <div class="modal-body" id="modal-dice-container">
-                </div>
+            <div class="modal-body" id="modal-dice-container"></div>
         </div>
     </div>
     
+    <div id="load-list-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cargar Lista de Pruebas</h2>
+                <button type="button" class="close-button" id="close-load-list-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="load-list-prompt">Selecciona el origen de la lista de pruebas:</p>
+                <div class="modal-actions">
+                    <button id="load-from-file-btn" class="btn" >Cargar desde archivo</button>
+                    <button id="load-from-simple-list-btn" class="btn" >Cargar lista simple</button>
+                    <button id="load-from-text-btn" class="btn" >Pegar texto</button>
+                    <button id="cancel-load-list-btn" class="btn" >Cancelar</button>
+                </div>
+                <div id="paste-text-area" style="display: none; margin-top: 20px;">
+                    <p>Pega el texto de la lista de pruebas aquí:</p>
+                    <textarea id="pasted-text" style="width: 100%; min-height: 150px;"></textarea>
+                    <button id="clear-paste-text-btn" class="btn" >Borrar texto actual</button>
+                    <button id="paste-clipboard-text-btn" class="btn" >Pegar texto copiado</button>
+                    <button id="confirm-paste-btn" class="btn" >Cargar con texto pegado</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p id="footer-text">Juego de Dados y Pruebas &copy; 2025</p>
         <button id="save-game-btn" class="btn">Guardar Partida</button>

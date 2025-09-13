@@ -99,57 +99,60 @@ function initHostConnection() {
 
 // Initialize connection as guest
 function initGuestConnection() {
-    try {
-        // Create a new peer for the guest
-        connectionState.peer = new Peer();
-        
-        connectionState.peer.on('open', (id) => {
-            // Connect to host
-            const conn = connectionState.peer.connect(`dice-game-${connectionState.accessCode}`);
-            
-            conn.on('open', () => {
-                connectionState.hostConnection = conn;
-                connectionState.isConnected = true;
-                updateConnectionDisplay();
-                
-                // Send guest info to host
-                conn.send({
-                    type: 'guest-info',
-                    name: connectionState.name,
-                    peerId: connectionState.peer.id
-                });
-                
-                // Listen for data from host
-                conn.on('data', (data) => {
-                    handleHostData(data);
-                });
-                
-                // Handle connection closing
-                conn.on('close', () => {
-                    connectionState.isConnected = false;
-                    connectionState.hostConnection = null;
-                    updateConnectionDisplay();
-                    alert('La conexión con el anfitrión se ha cerrado.');
-                });
-            });
-            
-            conn.on('error', (err) => {
-                console.error('Guest connection error:', err);
-                connectionState.isConnected = false;
-                updateConnectionDisplay();
-            });
-        });
-        
-        connectionState.peer.on('error', (err) => {
-            console.error('Guest PeerJS error:', err);
-            connectionState.isConnected = false;
+    console.log("Initializing guest connection...");
+    connectionState.peer = new Peer(connectionState.name, {
+        host: 'peerjs-server.herokuapp.com',
+        secure: true
+    });
+
+    connectionState.peer.on('open', id => {
+        console.log("My PeerJS ID is:", id);
+        // Connect to the host
+        connectionState.hostConnection = connectionState.peer.connect(connectionState.accessCode);
+
+        // Listen for when the connection is open
+        connectionState.hostConnection.on('open', () => {
+            console.log("Connected to host!");
+            connectionState.isConnected = true;
             updateConnectionDisplay();
+            hideWaitingScreen();
+
+            // Send initial information to host
+            connectionState.hostConnection.send({
+                type: 'guest-join',
+                name: connectionState.name,
+                darkMode: connectionState.darkMode,
+                language: connectionState.language
+            });
         });
-    } catch (err) {
-        console.error('Failed to initialize guest PeerJS:', err);
-        connectionState.isConnected = false;
-        updateConnectionDisplay();
-    }
+
+        // Listen for data from the host
+        connectionState.hostConnection.on('data', data => {
+            if (data.type === 'game-state-update') {
+                console.log("Received game state from host.");
+                // AGREGAR ESTA LÍNEA DE CÓDIGO
+                updateGameFromHostData(data.gameState); 
+            }
+            if (data.type === 'host-ended-game') {
+                alert(data.message);
+                redirectToLanding();
+            }
+        });
+
+        // Listen for connection close
+        connectionState.hostConnection.on('close', () => {
+            console.log("Disconnected from host.");
+            connectionState.isConnected = false;
+            alert("El anfitrión ha salido de la partida.");
+            redirectToLanding();
+        });
+    });
+
+    connectionState.peer.on('error', err => {
+        console.error("PeerJS error:", err);
+        alert('Error de conexión con el anfitrión. Asegúrate de que el código sea correcto y el anfitrión esté en la partida.');
+        redirectToLanding();
+    });
 }
 
 // Setup connection with a guest

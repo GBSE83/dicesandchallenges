@@ -58,7 +58,7 @@ const landingTranslations = {
         codeCopied: "Code copied",
         waitingForHostTitle: "Waiting for host",
         waitingForHostMessage: "Please wait for the host to start the game.",
-        cancelButton: "Cancel"
+        cancelButton: "Cancelar"
     }
 };
 
@@ -177,7 +177,7 @@ function startHostGame() {
         return;
     }
     const accessCode = landingState.accessCode;
-    // Redirect to game.html with accessCode, which will now also serve as the PeerID
+    // Redirect to game.html, using the accessCode as the PeerJS ID
     const url = `game.html?role=host&name=${encodeURIComponent(playerName)}&accessCode=${encodeURIComponent(accessCode)}&darkMode=${landingState.isDarkMode}&language=${landingState.currentLanguage}`;
     window.location.href = url;
 }

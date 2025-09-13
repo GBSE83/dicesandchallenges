@@ -13,6 +13,8 @@ let connectionState = {
     language: 'es'
 };
 
+import { updateGameFromHostData } from './app.js';
+
 // DOM elements
 const connectionIndicator = document.getElementById('connection-indicator');
 const userRoleSpan = document.getElementById('user-role');

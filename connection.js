@@ -4,6 +4,7 @@ let connectionState = {
     name: '',
     accessCode: '',
     peer: null,
+    peerId: null,
     hostConnection: null,
     guestConnections: [],
     isConnected: false,
@@ -17,7 +18,6 @@ window.connectionState = connectionState;
 const connectionIndicator = document.getElementById('connection-indicator');
 const userRoleSpan = document.getElementById('user-role');
 const exitGameBtn = document.getElementById('exit-game-btn');
-const loadingText = document.getElementById('loading-text');
 
 // Initialize connection system
 function initConnection() {
@@ -26,6 +26,7 @@ function initConnection() {
     connectionState.role = urlParams.get('role');
     connectionState.name = urlParams.get('name');
     connectionState.accessCode = urlParams.get('accessCode');
+    connectionState.peerId = urlParams.get('peerId');
     connectionState.language = urlParams.get('language') || 'es';
     connectionState.darkMode = urlParams.get('darkMode') === 'true';
     
@@ -43,6 +44,9 @@ function initConnection() {
     // Initialize PeerJS based on role
     if (connectionState.role === 'host') {
         initHostConnection();
+        
+        // Start periodic update for the guest list
+        setInterval(updateGuestList, 2000);
     } else if (connectionState.role === 'guest') {
         initGuestConnection();
     }
@@ -65,7 +69,8 @@ function updateConnectionDisplay() {
 // Host connection
 function initHostConnection() {
     console.log("Initializing host connection...");
-    connectionState.peer = new Peer(connectionState.accessCode, {
+    // Use the unique peerId for the host's Peer object
+    connectionState.peer = new Peer(connectionState.peerId, {
         host: 'peerjs-server.herokuapp.com',
         secure: true
     });
@@ -75,35 +80,36 @@ function initHostConnection() {
         connectionState.isConnected = true;
         updateConnectionDisplay();
         hideWaitingScreen();
-    });
 
-    connectionState.peer.on('connection', conn => {
-        console.log("New guest connected:", conn.peer);
-        connectionState.guestConnections.push(conn);
-        conn.on('data', data => {
-            if (data.type === 'guest-join') {
-                console.log("Guest joined:", data.name);
-                // Send the current game state to the new guest
-                if (window.gameState) {
-                    conn.send({
-                        type: 'game-state-update',
-                        gameState: window.gameState
-                    });
+        // Host also needs to listen for guest connections
+        connectionState.peer.on('connection', conn => {
+            console.log("New guest connected:", conn.peer);
+            connectionState.guestConnections.push(conn);
+            conn.on('data', data => {
+                if (data.type === 'guest-join') {
+                    console.log("Guest joined:", data.name);
+                    // Send the current game state to the new guest
+                    if (window.gameState) {
+                        conn.send({
+                            type: 'game-state-update',
+                            gameState: window.gameState
+                        });
+                    }
                 }
-            }
-        });
-        conn.on('close', () => {
-            console.log("Guest disconnected:", conn.peer);
-            connectionState.guestConnections = connectionState.guestConnections.filter(c => c.peer !== conn.peer);
+            });
+            conn.on('close', () => {
+                console.log("Guest disconnected:", conn.peer);
+                connectionState.guestConnections = connectionState.guestConnections.filter(c => c.peer !== conn.peer);
+                updateConnectionDisplay();
+            });
             updateConnectionDisplay();
         });
-        updateConnectionDisplay();
     });
 
     connectionState.peer.on('error', err => {
         console.error("PeerJS error:", err);
-        alert('Error de conexión. Por favor, regresa al inicio y vuelve a crear la partida.');
-        redirectToLanding();
+        // Do not redirect on error, let the user see the problem
+        showError('Error de conexión. Asegúrate de que el servidor está funcionando y que tu conexión a Internet es estable.');
     });
 }
 
@@ -120,7 +126,7 @@ function initGuestConnection() {
 
     connectionState.peer.on('open', id => {
         console.log("My PeerJS ID is:", id);
-        // Connect to the host
+        // Connect to the host using the access code
         connectionState.hostConnection = connectionState.peer.connect(connectionState.accessCode);
         
         // Listen for when the connection is open
@@ -195,6 +201,19 @@ function broadcastGameState(gameState) {
 }
 window.broadcastGameState = broadcastGameState; // Make it a global function
 
+// Update the list of connected guests on the UI
+function updateGuestList() {
+    const guestListElement = document.getElementById('connected-users-list');
+    if (!guestListElement) return;
+
+    guestListElement.innerHTML = '';
+    connectionState.guestConnections.forEach(conn => {
+        const li = document.createElement('li');
+        li.textContent = conn.peer;
+        guestListElement.appendChild(li);
+    });
+}
+
 // Host ends the game for all connected guests
 function endHostGame() {
     if (connectionState.role === 'host') {
@@ -213,6 +232,7 @@ function endHostGame() {
         // Clear guest connections
         connectionState.guestConnections = [];
         updateConnectionDisplay();
+        updateGuestList();
     }
 }
 

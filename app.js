@@ -1,18 +1,3 @@
-// Game state variables
-const gameState = {
-    gameTitle: "Juego de Dados y Pruebas",
-    players: [],
-    challenges: [],
-    currentChallengeIndex: 0,
-    roundNumber: 0,
-    minRoll: null,
-    minRollPlayer: null,
-    isGameStarted: false,
-    roundsLogData: [],
-    isDarkMode: false,
-    currentLanguage: 'es'
-};
-
 // Language translations
 const translations = {
     es: {
@@ -45,30 +30,93 @@ const translations = {
         resetGameData: "Vaciar Datos",
         resetGameConfirmation: "¿Estás seguro de que quieres reiniciar el juego? Se mantendrán los jugadores y las pruebas, pero se reiniciarán las tiradas.",
         loadGame: "Cargar Partida",
-        resetData: "Vaciar Datos",
-        importChallenges: "Importar pruebas",
-        importTitle: "Importar Pruebas",
-        importInstructions: "Pega la lista de pruebas o sube un archivo.",
-        saveList: "Guardar lista",
-        saveListTitle: "Guardar Lista de Pruebas",
-        saveListInstructions: "Copia esta lista de pruebas o guárdala en un archivo de texto.",
-        copyText: "Copiar Texto",
-        importFile: "Importar desde archivo",
+        resetData: "Resetear Datos",
+        loadChallengeList: "Cargar Lista",
+        loser: "Perdedor",
+        initialStatus: "Situación Inicial",
+        continueGame: "Continuar Juego",
+        addMoreChallenges: "Para continuar el juego, agregue más pruebas a la lista.",
+        continuePlaying: "Seguir jugando",
+        selectChallenges: "Seleccionar Pruebas",
+        cancelSelection: "Cancelar selección",
+        deleteSelected: "Eliminar seleccionados",
+        deactivateSelected: "Desactivar seleccionados",
+        showDeactivated: "Mostrar desactivadas",
+        hideDeactivated: "Ocultar desactivadas",
+        noDeactivatedChallenges: "No hay pruebas desactivadas",
+        challengeTooltip: "Doble clic para editar / Arrastrar para reordenar",
+        playerTooltip: "Doble clic para desactivar jugador",
+        replaceChallengesConfirmation: "¿Desea reemplazar la lista de pruebas actual con la lista del archivo?",
+        appendChallengesConfirmation: "¿Desea añadir las pruebas del archivo a la lista actual?",
+        challengesReplaced: "Lista de pruebas reemplazada.",
+        challengesAdded: "Se han añadido",
+        challengesFromFile: "pruebas desde el archivo.",
+        selectAll: "Seleccionar todas",
+        deselectAll: "Deseleccionar todas",
+        deactivatedChallengeTooltip: "Doble clic para reactivate challenge",
+        downloadChallengeList: "Descargar Lista",
+        downloadListTitle: "Descargar Lista de Pruebas",
+        downloadListPrompt: "Selecciona qué tipo de lista quieres descargar:",
+        downloadAllChallenges: "Todas las pruebas",
+        downloadActiveChallenges: "Pruebas activas ",
+        cancelDownload: "Cancelar",
+        downloadSimpleList: "Lista sencilla",
+        descriptionInstructionsTitle: "Descripción del Juego e Instrucciones Iniciales",
+        descriptionTitle: "Descripción",
+        gameTitleLabel: "Título del Juego",
+        instructionsTitle: "Instrucciones Iniciales",
+        descriptionPlaceholder: "Escribe la descripción del juego aquí",
+        instructionsPlaceholder: "Escribe las instrucciones del juego aquí",
+        gameTitlePlaceholder: "Escribe el título del juego aquí",
+        showSection: "Mostrar",
+        hideSection: "Ocultar",
+        restartGame: "Reiniciar Juego",
+        undoLastRoll: "Anular última tirada",
+        noUndoAvailable: "No hay tirada anterior para anular",
+        repeatRoll: "Tirada repetida: continuar juego",
+        undoConfirmation: "¿Estás seguro de que quieres anular la última tirada?",
+        nextChallenge: "prueba siguiente",
+        loadListTitle: "Cargar Lista de Pruebas",
+        loadListPrompt: "Seleccione la fuente de la lista de pruebas:",
+        loadFromFile: "Cargar desde archivo",
+        loadSimpleList: "Cargar lista simple",
         pasteText: "Pegar texto",
-        noChallengesToSave: "No hay pruebas para guardar.",
-        diceInfo: "Información de la Tirada",
-        diceDetails: "Detalles de la tirada para: ",
-        lowestRollsHeader: "Tirada más baja:",
-        historyHeader: "Historial de tiradas:",
-        close: "Cerrar",
-        autoCloseModal: "Cerrar ventana de tiradas automáticamente",
-        lowestRoll: "Tirada más baja",
-        isEliminated: "Eliminado",
-        roundsLogTitle: "Registro de Rondas",
-        loading: "Cargando..."
+        loadWithPastedText: "Cargar con texto pegado",
+        cancelLoad: "Cancelar",
+        includeDeactivatedChallenges: "¿Quieres incluir las pruebas desactivadas en la lista sencilla?",
+        diceValueError: "El valor máximo de los dados no puede ser tan bajo para ese número de jugadores activos.",
+        rollNoChallengeWarning: "¿Seguro que quieres realizar una tirada sin prueba? Los resultados no contarán para el juego.",
+        rollNoChallengeCheckboxLabel: "Tirar sin avanzar a prueba siguiente",
+        editBtn: "Editar",
+        deleteConfirmation: "¿Estás seguro de que quieres eliminar a este jugador?",
+        resetConfirmation: "¿Estás seguro de que quieres reiniciar el juego?",
+        invalidSaveFile: "Archivo de partida no válido.",
+        saveLoadError: "Error al leer el archivo de partida.",
+        gameLoadedSuccessfully: "¡Partida cargada con éxito!",
+        fileLoadError: "Error al leer el archivo.",
+        noChallengesInFile: "No se encontraron pruebas en el archivo.",
+        deleteChallengesConfirmation: "¿Estás seguro de que quieres eliminar las pruebas seleccionadas?",
+        challengesDeactivatedAlert: "Se han desactivado",
+        challengesText: "pruebas",
+        noChallengesDeactivatedAlert: "No se ha seleccionado ninguna prueba para desactivar.",
+        noActivePlayersAlert: "No hay jugadores activos para tirar los dados.",
+        saveFilenameAlert: "Por favor, introduce un nombre de archivo.",
+        challengeListLoadError: "Error al cargar la lista de Challenges:",
+        simpleListLoadError: "Error al cargar la lista simple:",
+        autoCloseModalCheckboxLabel: "Cerrar automáticamente",
+        autoCloseTimerLabel: "Tiempo de cierre automático (segundos):",
+        pasteClipboard: "Pegar desde portapapeles",
+        allowDuplicateRollsCheckboxLabel: "Permitir mismos resultados",
+        exitGame: "Salir del juego",
+        exitGameConfirmation: "¿Estás seguro de que quieres salir del juego?",
+        exitGameTitle: "Salir del Juego",
+        endGameStay: "Terminar partida y mantenerme en la sala",
+        endGameExit: "Terminar partida y volver a la sala inicial",
+        cancelAction: "Cancelar acción",
+        hostEndedGame: "El anfitrión ha terminado la partida."
     },
     en: {
-        gameTitle: "Dice and Challenge Game",
+        gameTitle: "Dice and Challenges Game",
         playersTitle: "Players",
         challengesTitle: "Challenges",
         gameStatusTitle: "Game Status",
@@ -81,701 +129,1131 @@ const translations = {
         playerNamePlaceholder: "Player name",
         challengeNamePlaceholder: "Challenge name",
         challengeDescriptionPlaceholder: "Challenge description",
-        footerText: "Dice and Challenge Game 2025 ",
+        footerText: "Dice and Challenges Game 2025 ",
         deleteBtn: "Delete",
         winner: "Winner!",
-        nextLevel: "Advance to next level",
+        nextLevel: "Advances to next level",
         gameOver: "Game Over! ",
         noPlayers: "Add at least one player to start",
         noChallenges: "Add at least one challenge to start",
-        saveGame: "Save Game",
+        saveGame: "Save game",
         saveGameTitle: "Save Game",
         saveFilenamePlaceholder: "game-name",
         saveButton: "Save",
         cancelButton: "Cancel",
         saveGamePrompt: "Enter a name for the save file:",
         resetGameData: "Reset Data",
-        resetGameConfirmation: "Are you sure you want to reset the game? Players and challenges will be kept, but rolls will be reset.",
+        resetGameConfirmation: "Are you sure you want to restart the game? Players and challenges will be kept, but dice rolls will be reset.",
         loadGame: "Load Game",
         resetData: "Reset Data",
-        importChallenges: "Import challenges",
-        importTitle: "Import Challenges",
-        importInstructions: "Paste the list of challenges or upload a file.",
-        saveList: "Save list",
-        saveListTitle: "Save Challenge List",
-        saveListInstructions: "Copy this challenge list or save it to a text file.",
-        copyText: "Copy Text",
-        importFile: "Import from file",
+        loadChallengeList: "Load List",
+        loser: "Loser",
+        initialStatus: "Initial Status",
+        continueGame: "Continue Game",
+        addMoreChallenges: "To continue the game, please add more challenges to the list.",
+        continuePlaying: "Continue playing",
+        selectChallenges: "Select Challenges",
+        cancelSelection: "Cancel selection",
+        deleteSelected: "Delete selected",
+        deactivateSelected: "Deactivate selected",
+        showDeactivated: "Show deactivated",
+        hideDeactivated: "Hide deactivated",
+        noDeactivatedChallenges: "No deactivated challenges",
+        challengeTooltip: "Double click to edit / Drag to reorder",
+        playerTooltip: "Double click to deactivate player",
+        replaceChallengesConfirmation: "Do you want to replace the current challenges list with the list from the file?",
+        appendChallengesConfirmation: "Do you want to append the challenges from the file to the current list?",
+        challengesReplaced: "Challenges list replaced.",
+        challengesAdded: "Added",
+        challengesFromFile: "challenges from file.",
+        selectAll: "Select All",
+        deselectAll: "Deselect All",
+        deactivatedChallengeTooltip: "Double click to reactivate challenge",
+        downloadChallengeList: "Download List",
+        downloadListTitle: "Download Challenge List",
+        downloadListPrompt: "Select which type of list you want to download:",
+        downloadAllChallenges: "All challenges",
+        downloadActiveChallenges: "Active challenges ",
+        cancelDownload: "Cancel",
+        downloadSimpleList: "Simple list",
+        descriptionInstructionsTitle: "Game Description and Initial Instructions",
+        descriptionTitle: "Description",
+        gameTitleLabel: "Game Title",
+        instructionsTitle: "Initial Instructions",
+        descriptionPlaceholder: "Write the game description here",
+        instructionsPlaceholder: "Write the game instructions here",
+        gameTitlePlaceholder: "Write game title here",
+        showSection: "Show",
+        hideSection: "Hide",
+        restartGame: "Restart Game",
+        undoLastRoll: "Undo last roll",
+        noUndoAvailable: "No previous roll to undo",
+        repeatRoll: "Repeated roll: continue game",
+        undoConfirmation: "Are you sure you want to undo the last roll?",
+        nextChallenge: "next challenge",
+        loadListTitle: "Load Challenge List",
+        loadListPrompt: "Select the source of the challenge list:",
+        loadFromFile: "Load from file",
+        loadSimpleList: "Load simple list",
         pasteText: "Paste text",
-        noChallengesToSave: "No challenges to save.",
-        diceInfo: "Roll Info",
-        diceDetails: "Roll details for: ",
-        lowestRollsHeader: "Lowest roll:",
-        historyHeader: "Roll history:",
-        close: "Close",
-        autoCloseModal: "Auto close dice modal",
-        lowestRoll: "Lowest Roll",
-        isEliminated: "Eliminated",
-        roundsLogTitle: "Rounds Log",
-        loading: "Loading..."
+        loadWithPastedText: "Load with pasted text",
+        cancelLoad: "Cancel",
+        includeDeactivatedChallenges: "Include deactivated challenges in the simple list?",
+        diceValueError: "The maximum dice value cannot be that low for that number of active players.",
+        rollNoChallengeWarning: "Are you sure you want to perform a roll without challenge? The results will not count towards the game.",
+        rollNoChallengeCheckboxLabel: "Roll without moving on next challenge",
+        editBtn: "Edit",
+        deleteConfirmation: "Are you sure you want to delete this player?",
+        resetConfirmation: "Are you sure you want to restart the game?",
+        invalidSaveFile: "Invalid game file.",
+        saveLoadError: "Error loading game file.",
+        gameLoadedSuccessfully: "Game loaded successfully!",
+        fileLoadError: "Error reading file.",
+        noChallengesInFile: "No challenges found in the file.",
+        deleteChallengesConfirmation: "Are you sure you want to delete the selected challenges?",
+        challengesDeactivatedAlert: "Challenges deactivated",
+        challengesText: "challenges",
+        noChallengesDeactivatedAlert: "No challenges were selected for deactivation.",
+        noActivePlayersAlert: "No active players to roll the dice.",
+        saveFilenameAlert: "Please enter a filename.",
+        challengeListLoadError: "Error loading challenge list:",
+        simpleListLoadError: "Error loading simple list:",
+        autoCloseModalCheckboxLabel: "Auto close",
+        autoCloseTimerLabel: "Auto close timer (seconds):",
+        pasteClipboard: "Paste from clipboard",
+        allowDuplicateRollsCheckboxLabel: "Allow the same results",
+        exitGame: "Exit game",
+        exitGameConfirmation: "Are you sure you want to exit the game?",
+        exitGameTitle: "Exit Game",
+        endGameStay: "End game and stay in room",
+        endGameExit: "End game and return to landing page",
+        cancelAction: "Cancel action",
+        hostEndedGame: "The host has ended the game."
     }
 };
 
-const diceFaces = [
-    '&#9856;', '&#9857;', '&#9858;', '&#9859;', '&#9860;', '&#9861;'
-];
+// Game state
+const gameState = {
+    players: [],
+    challenges: [],
+    currentChallenge: 0,
+    gameStarted: false,
+    currentLanguage: 'es',
+    isDarkMode: false,
+    diceRolledInGame: false,
+    roundsLogData: [],
+    gameEnded: false,
+    deactivatedChallenges: [], 
+    previousPlayerState: null,
+    playerStateHistory: [],
+    diceMaxValue: 10, 
+    allowDuplicateRolls: false // Added state for allow duplicate rolls
+};
 
+// DOM elements
+const playerNameInput = document.getElementById('player-name');
+const addPlayerBtn = document.getElementById('add-player');
 const playerList = document.getElementById('player-list');
+const challengeNameInput = document.getElementById('challenge-name');
+const addChallengeBtn = document.getElementById('add-challenge');
 const challengeList = document.getElementById('challenge-list');
-const gameStatus = document.getElementById('game-status');
-const playerInput = document.getElementById('player-name-input');
-const addPlayerBtn = document.getElementById('add-player-btn');
-const challengeNameInput = document.getElementById('challenge-name-input');
-const challengeDescriptionInput = document.getElementById('challenge-description-input');
-const addChallengeBtn = document.getElementById('add-challenge-btn');
-const startGameBtn = document.getElementById('start-game-btn');
-const rollDiceBtn = document.getElementById('roll-dice-btn');
-const currentChallengeDisplay = document.getElementById('current-challenge-display');
-const currentChallengeLabel = document.getElementById('current-challenge-label');
-const resultsLog = document.getElementById('results-log');
-const languageToggle = document.getElementById('language-toggle');
-const themeToggle = document.getElementById('theme-toggle');
+const challengeDescriptionInput = document.getElementById('challenge-description');
+const startGameBtn = document.getElementById('start-game');
+const rollDiceBtn = document.getElementById('roll-dice');
+const diceContainer = document.getElementById('dice-container');
+const roundResults = document.getElementById('round-results');
+const currentChallengeDisplay = document.getElementById('current-challenge');
+const themeToggleBtn = document.getElementById('theme-toggle');
+const languageToggleBtn = document.getElementById('language-toggle');
+const gameSection = document.getElementById('game-section');
+const modal = document.getElementById('results-modal');
+const modalDiceContainer = document.getElementById('modal-dice-container');
+const closeButton = document.querySelector('.close-button');
 const saveGameBtn = document.getElementById('save-game-btn');
 const loadGameBtn = document.getElementById('load-game-btn');
-const resetGameBtn = document.getElementById('reset-game-btn');
 const saveGameModal = document.getElementById('save-game-modal');
-const saveFileNameInput = document.getElementById('save-filename-input');
-const saveButton = document.getElementById('save-button');
-const cancelSaveButton = document.getElementById('cancel-save-button');
-const loadGameModal = document.getElementById('load-game-modal');
-const loadFileInput = document.getElementById('load-file-input');
-const loadButton = document.getElementById('load-button');
-const cancelLoadButton = document.getElementById('cancel-load-button');
-const importModal = document.getElementById('import-modal');
-const importChallengesBtn = document.getElementById('import-challenges-btn');
-const importFromFileBtn = document.getElementById('load-from-file-btn');
-const importFromTextBtn = document.getElementById('load-from-text-btn');
-const cancelImportBtn = document.getElementById('cancel-load-list-btn');
-const pasteTextArea = document.getElementById('paste-text-area');
+const currentChallengeDiv = document.getElementById('current-challenge-display');
+const closeSaveModalButton = document.getElementById('close-save-modal');
+const confirmSaveButton = document.getElementById('confirm-save');
+const cancelSaveButton = document.getElementById('cancel-save');
+const saveFilenameInput = document.getElementById('save-filename');
+const loadChallengeListBtn = document.getElementById('load-challenge-list');
+const roundsLog = document.getElementById('rounds-log');
+const playerLevelsList = document.getElementById('player-levels-list');
+const resetGameBtn = document.getElementById('reset-game-btn');
+const continueGameBtn = document.getElementById('continue-game');
+const selectChallengesBtn = document.getElementById('select-challenges-btn');
+const challengeActionsDiv = document.getElementById('challenge-actions');
+const deleteSelectedChallengesBtn = document.getElementById('delete-selected-challenges-btn');
+const deactivateSelectedChallengesBtn = document.getElementById('deactivate-selected-challenges-btn');
+const challengesSection = document.getElementById('challenges-section');
+const deactivatedChallengeList = document.getElementById('deactivated-challenge-list'); 
+const toggleDeactivatedChallengesBtn = document.getElementById('toggle-deactivated-challenges-btn'); 
+const selectAllChallengesBtn = document.getElementById('select-all-challenges-btn'); 
+const downloadChallengeListBtn = document.getElementById('download-challenge-list-btn'); 
+const downloadChallengeListModal = document.getElementById('download-challenge-list-modal'); 
+const closeDownloadListModalButton = document.getElementById('close-download-list-modal');
+const cancelDownloadListBtn = document.getElementById('cancel-download-list-btn');
+const downloadAllChallengesBtn = document.getElementById('download-all-challenges-btn');
+const downloadActiveChallengesBtn = document.getElementById('download-active-challenges-btn');
+const downloadSimpleListBtn = document.getElementById('download-simple-list-btn'); 
+const sectionHeaders = document.querySelectorAll('.section-header');
+const toggleButtons = document.querySelectorAll('.toggle-btn');
+const descriptionInstructionsTitle = document.getElementById('description-instructions-title');
+const descriptionTitle = document.getElementById('description-title');
+const gameTitleLabel = document.getElementById('game-title-label');
+const gameTitleInput = document.getElementById('game-title-input');
+const instructionsTitle = document.getElementById('instructions-title');
+const gameDescription = document.getElementById('game-description');
+const gameInstructions = document.getElementById('game-instructions');
+const undoLastRollBtn = document.getElementById('undo-last-roll'); 
+const loadChallengeListModal = document.getElementById('load-challenge-list-modal');
+const closeLoadListModalButton = document.getElementById('close-load-list-modal');
+const cancelLoadListBtnModal = document.getElementById('cancel-load-list-btn');
+const loadFromFileBtn = document.getElementById('load-from-file-btn');
+const loadFromTextBtn = document.getElementById('load-from-text-btn');
+const pasteTextAreaDiv = document.getElementById('paste-text-area');
 const pastedTextInput = document.getElementById('pasted-text');
-const clearPastedTextBtn = document.getElementById('clear-paste-text-btn');
-const pasteClipboardBtn = document.getElementById('paste-clipboard-text-btn');
 const confirmPasteBtn = document.getElementById('confirm-paste-btn');
-const saveListModal = document.getElementById('save-list-modal');
-const saveListBtn = document.getElementById('save-list-btn');
-const saveListTextarea = document.getElementById('save-list-text-area');
-const copyListTextBtn = document.getElementById('copy-list-text-btn');
-const cancelSaveListBtn = document.getElementById('cancel-save-list-btn');
-const diceModal = document.getElementById('dice-modal');
-const modalDiceContainer = document.getElementById('modal-dice-container');
-const closeDiceModalBtn = document.getElementById('close-dice-modal');
-const modalPlayerName = document.getElementById('modal-player-name');
-const modalLowestRoll = document.getElementById('modal-lowest-roll');
-const modalRollHistory = document.getElementById('modal-roll-history');
-const modalTitle = document.getElementById('modal-title');
+const loadFromSimpleListBtn = document.getElementById('load-from-simple-list-btn');
+const diceMaxValueInput = document.getElementById('dice-max-value');
+const diceRangeError = document.getElementById('dice-range-error');
+const rollNoChallengeCheckbox = document.getElementById('roll-no-challenge-checkbox');
 const autoCloseModalCheckbox = document.getElementById('auto-close-modal-checkbox');
 const autoCloseTimerContainer = document.getElementById('auto-close-timer-container');
-const autoCloseTimerText = document.getElementById('auto-close-timer-text');
-const gameTitleInput = document.getElementById('game-title-input');
-const editTitleBtn = document.getElementById('edit-title-btn');
-const saveTitleBtn = document.getElementById('save-title-btn');
+const autoCloseTimerInput = document.getElementById('auto-close-timer');
+const clearPasteTextBtn = document.getElementById('clear-paste-text-btn');
+const pasteClipboardTextBtn = document.getElementById('paste-clipboard-text-btn');
+const allowDuplicateRollsCheckbox = document.getElementById('allow-duplicate-rolls-checkbox'); 
+const showLastDiceResultBtn = document.getElementById('show-last-dice-result'); 
+const exitGameBtn = document.getElementById('exit-game-btn');
 
-let autoCloseTimer = null;
-let connectionState = window.connectionState || { role: 'host' };
-
-// Initialize the game
-document.addEventListener('DOMContentLoaded', () => {
-    loadChallengesFromLocalStorage();
-    renderPlayers();
-    renderChallenges();
-    updateGameStatus();
-    updateCurrentChallengeDisplay();
-    updateTextBasedOnLanguage();
-    applyTheme(gameState.isDarkMode);
-    renderRoundsLog();
-
-    if (connectionState.role === 'guest') {
-        makePageReadOnly();
+// Event listeners
+addPlayerBtn.addEventListener('click', addPlayer);
+addChallengeBtn.addEventListener('click', addChallenge);
+startGameBtn.addEventListener('click', startGame);
+rollDiceBtn.addEventListener('click', rollDice);
+themeToggleBtn.addEventListener('click', toggleTheme);
+languageToggleBtn.addEventListener('click', toggleLanguage);
+closeButton.addEventListener('click', closeDiceModal);
+saveGameBtn.addEventListener('click', openSaveGameModal);
+closeSaveModalButton.addEventListener('click', closeSaveGameModal);
+cancelSaveButton.addEventListener('click', closeSaveGameModal);
+confirmSaveButton.addEventListener('click', saveGameData);
+loadGameBtn.addEventListener('click', loadGameData);
+loadChallengeListBtn.addEventListener('click', openLoadChallengeListModal);
+resetGameBtn.addEventListener('click', resetGameData);
+continueGameBtn.addEventListener('click', continueGame);
+selectChallengesBtn.addEventListener('click', toggleSelectChallenges);
+deleteSelectedChallengesBtn.addEventListener('click', deleteSelectedChallenges);
+deactivateSelectedChallengesBtn.addEventListener('click', deactivateSelectedChallenges);
+toggleDeactivatedChallengesBtn.addEventListener('click', toggleDeactivatedChallengesList); 
+selectAllChallengesBtn.addEventListener('click', toggleSelectAllChallenges); 
+downloadChallengeListBtn.addEventListener('click', openDownloadChallengeListModal); 
+closeDownloadListModalButton.addEventListener('click', closeDownloadChallengeListModal);
+cancelDownloadListBtn.addEventListener('click', closeDownloadChallengeListModal);
+downloadAllChallengesBtn.addEventListener('click', () => downloadChallengeList('all'));
+downloadActiveChallengesBtn.addEventListener('click', () => downloadChallengeList('active'));
+downloadSimpleListBtn.addEventListener('click', () => downloadChallengeList('simple')); 
+undoLastRollBtn.addEventListener('click', undoLastRoll);
+closeLoadListModalButton.addEventListener('click', closeLoadChallengeListModal);
+cancelLoadListBtnModal.addEventListener('click', closeLoadChallengeListModal);
+loadFromFileBtn.addEventListener('click', loadChallengeListFromFile);
+loadFromTextBtn.addEventListener('click', openPasteTextArea);
+confirmPasteBtn.addEventListener('click', loadChallengeListFromText);
+loadFromSimpleListBtn.addEventListener('click', loadSimpleList);
+diceMaxValueInput.addEventListener('change', updateDiceMaxValue);
+autoCloseModalCheckbox.addEventListener('change', toggleAutoCloseTimer);
+clearPasteTextBtn.addEventListener('click', clearPastedText);
+pasteClipboardTextBtn.addEventListener('click', pasteFromClipboard);
+rollNoChallengeCheckbox.addEventListener('change', updateRollDiceButtonState);
+showLastDiceResultBtn.addEventListener('click', showLastDiceResult);
+exitGameBtn.addEventListener('click', () => {
+    if (confirm(translations[gameState.currentLanguage].exitGameConfirmation)) {
+        // logic to exit the game
     }
 });
 
-function updateTextBasedOnLanguage() {
+// Event listeners for section toggling
+sectionHeaders.forEach(header => {
+    header.addEventListener('click', function(event) {
+        if (event.target.classList.contains('toggle-btn')) {
+            return;
+        }
+        
+        const targetId = this.getAttribute('data-target');
+        const contentSection = document.getElementById(targetId);
+        const toggleBtn = this.querySelector('.toggle-btn');
+        
+        contentSection.classList.toggle('collapsed');
+        toggleBtn.textContent = contentSection.classList.contains('collapsed') ? '+' : '-';
+    });
+});
+
+toggleButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.stopPropagation(); 
+        
+        const header = this.closest('.section-header');
+        const targetId = header.getAttribute('data-target');
+        const contentSection = document.getElementById(targetId);
+        
+        contentSection.classList.toggle('collapsed');
+        this.textContent = contentSection.classList.contains('collapsed') ? '+' : '-';
+    });
+});
+
+// Event listeners for Enter key in input fields
+playerNameInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+        addPlayer();
+    }
+});
+
+challengeNameInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+        addChallenge();
+    }
+});
+
+challengeDescriptionInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        addChallenge();
+    }
+});
+
+// Initialize the game
+function init() {
+    updateLanguage();
+    updatePlayerLevelsDisplay();
+    updateCurrentChallengeDisplay();
+    continueGameBtn.disabled = true;
+    selectChallengesBtn.disabled = gameState.challenges.length === 0;
+    updateDeactivatedChallengeList(); 
+    undoLastRollBtn.disabled = true; 
+    showLastDiceResultBtn.disabled = true; 
+    setupChallengeTooltip();
+    setupCurrentChallengePopup(); 
+    setupDicePopup(); 
+    diceMaxValueInput.value = gameState.diceMaxValue; 
+    allowDuplicateRollsCheckbox.checked = gameState.allowDuplicateRolls; 
+}
+
+// Add a player
+function addPlayer() {
+    const playerName = playerNameInput.value.trim();
+    if (playerName) {
+        gameState.players.push({
+            name: playerName,
+            level: 0,
+            eliminated: false,
+            active: true
+        });
+        updatePlayerList();
+        playerNameInput.value = '';
+    }
+}
+
+// Add a challenge
+function addChallenge() {
+    const challengeName = challengeNameInput.value.trim();
+    const challengeDescription = challengeDescriptionInput.value.trim();
+    if (challengeName) {
+        gameState.challenges.push({ name: challengeName, active: true, description: challengeDescription });
+        updateChallengeList();
+        challengeNameInput.value = '';
+        challengeDescriptionInput.value = '';
+        selectChallengesBtn.disabled = gameState.challenges.length === 0;
+    }
+}
+
+// Update the player list in the UI
+function updatePlayerList() {
+    playerList.innerHTML = '';
+    gameState.players.forEach((player, index) => {
+        const li = document.createElement('li');
+        const playerNameClass = player.active ? '' : 'inactive-player';
+        const playerStatus = player.active ? '' : ' (desactivado)';
+        li.innerHTML = `
+            <span class="player-name-item ${playerNameClass}" data-index="${index}" title="${translations[gameState.currentLanguage].playerTooltip}">${player.name}${playerStatus}</span>
+            <div class="player-actions">
+                <button class="edit-player-btn btn" data-index="${index}">${translations[gameState.currentLanguage].editBtn}</button>
+                <button class="delete-player-btn" data-index="${index}">${translations[gameState.currentLanguage].deleteBtn}</button>
+            </div>
+        `;
+        playerList.appendChild(li);
+    });
+
+    document.querySelectorAll('.player-name-item').forEach(playerName => {
+        playerName.addEventListener('dblclick', (e) => {
+            const index = e.target.getAttribute('data-index');
+            gameState.players[index].active = !gameState.players[index].active;
+            updatePlayerList();
+            updatePlayerLevelsDisplay();
+            updateRollDiceButtonState(); 
+        });
+    });
+
+    document.querySelectorAll('.delete-player-btn').forEach(deleteBtn => {
+        deleteBtn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.getAttribute('data-index'), 10);
+            deletePlayer(index);
+        });
+    });
+
+    document.querySelectorAll('.edit-player-btn').forEach(editBtn => {
+        editBtn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.getAttribute('data-index'), 10);
+            editPlayer(index);
+        });
+    });
+
+    updateRollDiceButtonState(); 
+}
+
+// Edit player name
+function editPlayer(index) {
+    const playerNameSpan = playerList.querySelector(`.player-name-item[data-index="${index}"]`);
+    const currentPlayerName = gameState.players[index].name;
+
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.value = currentPlayerName;
+    inputElement.classList.add('edit-challenge-input'); 
+    inputElement.style.width = '70%'; 
+    inputElement.style.boxSizing = 'border-box'; 
+
+    playerNameSpan.replaceWith(inputElement);
+    inputElement.focus();
+
+    inputElement.addEventListener('blur', () => {
+        updatePlayerName(index, inputElement.value);
+    });
+    inputElement.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            inputElement.blur();
+        } else if (event.key === 'Escape') {
+            updatePlayerName(index, currentPlayerName, true); 
+        }
+    });
+}
+
+// Update player name
+function updatePlayerName(index, newName, revert = false) {
+    const originalName = gameState.players[index].name;
+    if (!revert) {
+        gameState.players[index].name = newName.trim();
+    }
+    updatePlayerList();
+    updatePlayerLevelsDisplay();
+}
+
+// Delete a player
+function deletePlayer(index) {
+    if (confirm(translations[gameState.currentLanguage].deleteConfirmation)) {
+        gameState.players.splice(index, 1);
+        updatePlayerList();
+        updatePlayerLevelsDisplay();
+    }
+}
+
+// Update the challenge list in the UI
+function updateChallengeList() {
+    challengeList.innerHTML = '';
+    gameState.challenges
+        .filter(challenge => challenge.active)
+        .forEach((challenge, index) => {
+        const li = document.createElement('li');
+        li.classList.add('challenge-list-item');
+        li.innerHTML = `
+            <span class="challenge-name-item" data-index="${index}" data-challenge-name="${challenge.name}" title="${translations[gameState.currentLanguage].challengeTooltip}">${index + 1}. ${challenge.name}</span>
+            <button class="challenge-description-btn" data-index="${index}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
+                    <circle cx="12" cy="12" r="10" fill="var(--secondary-color)" fill-opacity="0.2"/>
+                    <path fill="var(--secondary-color)" d="M12 16a1 1 0 01-1-1V9a1 1 0 012 0v6a1 1 0 01-1 1z"/>
+                    <circle cx="12" cy="6" r="1.5" fill="var(--secondary-color)"/>
+                </svg>
+            </button>
+            <input type="checkbox" class="challenge-checkbox" data-index="${index}">
+            <div class="challenge-description-text" id="challenge-description-${index}">
+                ${challenge.description}
+            </div>
+        `;
+        challengeList.appendChild(li);
+    });
+
+    document.querySelectorAll('.challenge-name-item').forEach(challengeNameSpan => {
+        challengeNameSpan.addEventListener('dblclick', (e) => {
+            const index = e.target.getAttribute('data-index');
+            const currentChallengeName = gameState.challenges[index].name;
+
+            const inputElement = document.createElement('input');
+            inputElement.type = 'text';
+            inputElement.value = currentChallengeName;
+            inputElement.classList.add('edit-challenge-input');
+
+            challengeNameSpan.replaceWith(inputElement);
+            inputElement.focus();
+
+            inputElement.addEventListener('blur', () => {
+                updateChallengeName(index, inputElement.value);
+            });
+            inputElement.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    inputElement.blur(); 
+                } else if (event.key === 'Escape') {
+                    updateChallengeName(index, currentChallengeName, true);
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.challenge-description-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = e.target.dataset.index;
+            const listItem = e.target.closest('.challenge-list-item');
+            const descriptionTextElement = listItem.querySelector('.challenge-description-text');
+            const currentDescription = gameState.challenges[index].description;
+
+            const textareaElement = document.createElement('textarea');
+            textareaElement.value = currentDescription;
+            textareaElement.classList.add('edit-challenge-input'); 
+            textareaElement.rows = 3; 
+
+            descriptionTextElement.innerHTML = ''; 
+            descriptionTextElement.appendChild(textareaElement);
+            descriptionTextElement.style.display = 'block'; 
+
+            textareaElement.focus();
+
+            textareaElement.addEventListener('blur', () => {
+                updateChallengeDescription(index, textareaElement.value);
+            });
+            textareaElement.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    textareaElement.blur();
+                } else if (event.key === 'Escape') {
+                    updateChallengeDescription(index, currentDescription, true); 
+                }
+            });
+        });
+    });
+}
+
+function updateChallengeName(index, newName, revert = false) {
+    const originalName = gameState.challenges[index].name;
+    if (!revert) {
+        gameState.challenges[index].name = newName.trim();
+    }
+
+    updateChallengeList(); 
+    updateCurrentChallengeDisplay(); 
+}
+
+function updateChallengeDescription(index, newDescription, revert = false) {
+    const originalDescription = gameState.challenges[index].description;
+    if (!revert) {
+        gameState.challenges[index].description = newDescription.trim();
+    }
+    updateChallengeList();
+}
+
+// Initialize SortableJS for challenge list
+Sortable.create(challengeList, {
+    handle: 'li',
+    draggable: 'li',
+    animation: 150,
+    onUpdate: function (evt/**Event*/) {
+        const newChallenges = [];
+        const items = evt.target.children;
+        for (let i = 0; i < items.length; i++) {
+            const challengeNameSpan = items[i].querySelector('.challenge-name-item');
+            const challengeName = challengeNameSpan ? challengeNameSpan.dataset.challengeName : '';
+            const originalChallengeObject = gameState.challenges.find(c => c.name === challengeName.trim());
+            if (originalChallengeObject) {
+                newChallenges.push(originalChallengeObject);
+            } else {
+                newChallenges.push({ name: challengeName.trim(), active: true });
+            }
+        }
+        gameState.challenges = newChallenges;
+        updateCurrentChallengeDisplay();
+        updateChallengeList();
+    },
+});
+
+// Start the game
+function startGame() {
+    if (gameState.gameStarted) {
+        if (!confirm(translations[gameState.currentLanguage].resetConfirmation)) {
+            return;
+        }
+        gameState.players.forEach(player => {
+            player.active = true;
+        });
+    } else {
+        if (gameState.players.length === 0) {
+            alert(translations[gameState.currentLanguage].noPlayers);
+            return;
+        }
+
+        if (gameState.challenges.length === 0) {
+            alert(translations[gameState.currentLanguage].noChallenges);
+            return;
+        }
+    }
+
+    gameState.gameStarted = true;
+    gameState.gameEnded = false;
+    gameState.currentChallenge = 0;
+    gameState.diceRolledInGame = false;
+    gameState.roundsLogData = [];
+
+    gameState.players.forEach(player => {
+        player.level = 0;
+        player.eliminated = false;
+        player.active = true;
+    });
+
+    gameState.playerStateHistory = [];
+    undoLastRollBtn.disabled = true;
+
+    updateCurrentChallengeDisplay();
+    updateStartButtonText();
+    rollDiceBtn.disabled = false;
+    continueGameBtn.disabled = true;
+    diceContainer.innerHTML = '';
+    roundResults.innerHTML = '';
+    modalDiceContainer.innerHTML = '';
+    roundsLog.innerHTML = '';
+    playerLevelsList.innerHTML = '';
+    updatePlayerLevelsDisplay();
+    updatePlayerList(); 
+    selectChallengesBtn.disabled = gameState.challenges.length === 0;
+}
+
+// Roll dice for each player
+function rollDice() {
+    if (!rollNoChallengeCheckbox.checked) {
+        if (!gameState.gameStarted) return;
+    }
+ 
+    if (rollNoChallengeCheckbox.checked) {
+        if (!confirm(translations[gameState.currentLanguage].rollNoChallengeWarning)) {
+            return; 
+        }
+        performNoChallengeRoll();
+    } else {
+        performGameRoll();
+    }
+}
+
+function performNoChallengeRoll() {
+    modalDiceContainer.innerHTML = '';
+    openDiceModal();
+
+    const activePlayers = gameState.players.filter(player => !player.eliminated && player.active);
+
+    if (activePlayers.length === 0) {
+        alert(translations[gameState.currentLanguage].noActivePlayersAlert || 'No hay jugadores activos para tirar los dados.');
+        closeDiceModal();
+        return;
+    }
+
+    const results = [];
+    let maxNameLength = 0;
+    const usedValues = new Set(); // Initialize usedValues Set here
+
+    activePlayers.forEach(player => {
+        if (player.name.length > maxNameLength) {
+            maxNameLength = player.name.length;
+        }
+        let value;
+        if (allowDuplicateRollsCheckbox.checked) {
+            value = Math.floor(Math.random() * (gameState.diceMaxValue + 1));
+        } else {
+            do {
+                value = Math.floor(Math.random() * (gameState.diceMaxValue + 1));
+            } while (usedValues.has(value));
+            usedValues.add(value);
+        }
+        results.push({ player, value });
+
+        const dice = document.createElement('div');
+        dice.className = 'dice dice-rolling';
+        dice.innerHTML = `
+            <div class="player-name">${player.name}</div>
+            <div class="dice-value">?</div>
+        `;
+        modalDiceContainer.appendChild(dice);
+    });
+
+    const diceWidth = Math.max(80, maxNameLength * 10); 
+    modalDiceContainer.style.setProperty('--dice-min-width', `${diceWidth}px`);
+
+
+    rollDiceBtn.disabled = true;
+
+    setTimeout(() => {
+        const diceElements = modalDiceContainer.querySelectorAll('.dice');
+        diceElements.forEach((dice, index) => {
+            dice.classList.remove('dice-rolling');
+            dice.querySelector('.dice-value').textContent = results[index].value;
+        });
+
+        const minValue = Math.min(...results.map(r => r.value));
+        const lowestRollers = results.filter(r => r.value === minValue);
+
+        const maxValue = Math.max(...results.map(r => r.value));
+        const highestRollers = results.filter(r => r.value === maxValue);
+
+        diceElements.forEach((dice, i) => {
+            if (lowestRollers.some(loser => loser.player === results[i].player)) {
+                dice.classList.add('lowest-roll');
+                dice.addEventListener('click', () => showDicePopup(results[i].player)); // Add click event listener to loser's dice
+            }
+            if (highestRollers.some(winner => winner.player === results[i].player) && !dice.classList.contains('lowest-roll')) {
+                dice.classList.add('highest-roll');
+            }
+        });
+
+
+        rollDiceBtn.disabled = false;
+        if (autoCloseModalCheckbox.checked) {
+            const timerValue = parseInt(autoCloseTimerInput.value, 10);
+            const delay = isNaN(timerValue) || timerValue < 1 ? 5000 : timerValue * 1000;
+            setTimeout(closeDiceModal, delay);
+        }
+    }, 1000);
+}
+
+function performGameRoll() {
+    gameState.playerStateHistory.push(JSON.parse(JSON.stringify(gameState.players)));
+
+    gameState.diceRolledInGame = true;
+    undoLastRollBtn.disabled = false;
+
+    modalDiceContainer.innerHTML = '';
+
+    const activePlayers = gameState.players.filter(player => !player.eliminated && player.active);
+
+    if (activePlayers.length === 1) {
+        const player = activePlayers[0];
+        player.level++;
+        updatePlayerLevelsDisplay();
+        if (player.level >= gameState.challenges.length) {
+            endGame(player, true);
+            currentChallengeDisplay.textContent = `${player.name}: ${translations[gameState.currentLanguage].gameOver} ${translations[gameState.currentLanguage].loser}: ${player.name}`;
+        } else {
+            gameState.currentChallenge = player.level - 1;
+            gameState.currentChallenge = Math.min(gameState.currentChallenge, gameState.challenges.length - 1);
+            gameState.currentChallenge = Math.max(0, gameState.currentChallenge);
+
+            const loserNames = activePlayers.map(r => r.player.name).join(', ');
+            currentChallengeDisplay.textContent = `${loserNames}: ${gameState.challenges[gameState.currentChallenge].name}`;
+        }
+        return;
+    }
+
+    openDiceModal();
+
+    if (activePlayers.length === 1) {
+        endGame(activePlayers[0]);
+        return;
+    }
+
+    if (activePlayers.length === 0) {
+        alert(translations[gameState.currentLanguage].noActivePlayersAlert || 'No hay jugadores activos para tirar los dados.');
+        closeDiceModal();
+        return;
+    }
+
+    const results = [];
+    const usedValues = new Set();
+    let maxNameLength = 0;
+
+    activePlayers.forEach(player => {
+        if (player.name.length > maxNameLength) {
+            maxNameLength = player.name.length;
+        }
+        let value;
+        if (allowDuplicateRollsCheckbox.checked) {
+            value = Math.floor(Math.random() * (gameState.diceMaxValue + 1));
+        } else {
+            do {
+                value = Math.floor(Math.random() * (gameState.diceMaxValue + 1));
+            } while (usedValues.has(value));
+            usedValues.add(value);
+        }
+        results.push({ player, value });
+
+        const dice = document.createElement('div');
+        dice.className = 'dice dice-rolling';
+        dice.innerHTML = `
+            <div class="player-name">${player.name}</div>
+            <div class="dice-value">?</div>
+        `;
+        modalDiceContainer.appendChild(dice);
+    });
+
+    const diceWidth = Math.max(80, maxNameLength * 10); 
+    modalDiceContainer.style.setProperty('--dice-min-width', `${diceWidth}px`);
+
+
+    rollDiceBtn.disabled = true;
+
+    setTimeout(() => {
+        const diceElements = modalDiceContainer.querySelectorAll('.dice');
+        diceElements.forEach((dice, index) => {
+            dice.classList.remove('dice-rolling');
+            dice.querySelector('.dice-value').textContent = results[index].value;
+        });
+
+        const minValue = Math.min(...results.map(r => r.value));
+        const lowestRollers = results.filter(r => r.value === minValue);
+
+        const maxValue = Math.max(...results.map(r => r.value));
+        const highestRollers = results.filter(r => r.value === maxValue);
+
+        if (lowestRollers.length >= 1) {
+            lowestRollers.forEach(result => {
+                diceElements.forEach((dice, i) => {
+                    if (results[i].player === result.player) {
+                        dice.classList.add('winner');
+                        dice.addEventListener('click', () => showDicePopup(result.player)); // Add click event listener to loser's dice
+                    }
+                });
+                diceElements.forEach((dice, i) => {
+                    if (lowestRollers.some(loser => loser.player === results[i].player)) {
+                        dice.classList.add('lowest-roll');
+                    }
+                });
+                diceElements.forEach((dice, i) => {
+                    if (highestRollers.some(winner => winner.player === results[i].player) && !dice.classList.contains('lowest-roll')) {
+                        dice.classList.add('highest-roll');
+                    }
+                });
+
+                result.player.level++;
+
+                if (result.player.level >= gameState.challenges.length) {
+                    endGame(result.player, true);
+                    return;
+                }
+            });
+
+            showRoundResults(results, lowestRollers);
+
+            if (gameState.gameStarted) {
+                const loserLevel = Math.max(...lowestRollers.map(r => r.player.level));
+                gameState.currentChallenge = loserLevel - 1;
+
+                gameState.currentChallenge = Math.min(gameState.currentChallenge, gameState.challenges.length - 1);
+                gameState.currentChallenge = Math.max(0, gameState.currentChallenge);
+
+                const challengeTexts = lowestRollers.map(loser => {
+                    const challengeIndex = Math.min(loser.player.level - 1, gameState.challenges.length - 1);
+                    const activeChallenges = gameState.challenges.filter(c => c.active);
+                    const challenge = activeChallenges[challengeIndex];
+                    return `<span class="player-challenge" data-description="${challenge.description}">${loser.player.name}</span>: ${challenge.name}`;
+                });
+                
+                currentChallengeDisplay.innerHTML = challengeTexts.join('<br>');
+                rollDiceBtn.disabled = false;
+                updatePlayerLevelsDisplay();
+            }
+        }
+        if (autoCloseModalCheckbox.checked) {
+            const timerValue = parseInt(autoCloseTimerInput.value, 10);
+            const delay = isNaN(timerValue) || timerValue < 1 ? 5000 : timerValue * 1000;
+            setTimeout(closeDiceModal, delay);
+        }
+    }, 1000);
+}
+
+// Show round results
+function showRoundResults(results, losers) {
+    roundResults.innerHTML = '';
+
+    const roundEntry = document.createElement('div');
+    roundEntry.classList.add('round-entry');
+    let roundResultsHTML = '';
+
+    results.forEach(result => {
+        const isLoser = losers.includes(result);
+        const playerName = result.player.name;
+        const diceValue = result.value;
+        const playerResultLine = `<p><span class="${isLoser ? 'loser' : ''}">${playerName}</span>: ${diceValue}</p>`;
+        roundResultsHTML += playerResultLine;
+    });
+    roundEntry.innerHTML = roundResultsHTML;
+    roundsLog.prepend(roundEntry);
+
+    gameState.roundsLogData.push({
+        results: results.map(r => ({
+            playerName: r.player.name,
+            value: r.value,
+            isLoser: losers.includes(r)
+        })),
+        html: roundResultsHTML,
+        diceResult: modalDiceContainer.innerHTML // Store the dice result HTML
+    });
+}
+
+// End the game
+function endGame(player, isLoser = false) {
+    gameState.gameStarted = false;
+    gameState.gameEnded = true;
+
+    const activeChallenges = gameState.challenges.filter(c => c.active);
+    if (activeChallenges.length > 0) {
+        const losers = gameState.players.filter(p => (p.level >= activeChallenges.length || !p.active) && p.active);
+        const challengeTexts = losers.map(loser => {
+            const challengeIndex = Math.min(loser.level - 1, activeChallenges.length - 1);
+            const challenge = activeChallenges[challengeIndex];
+            return `<span class="player-challenge" data-description="${challenge.description}">${loser.name}</span>: ${challenge.name} <span class="loser-text">(${translations[gameState.currentLanguage].loser})</span>`;
+        });
+
+        currentChallengeDisplay.innerHTML = challengeTexts.join('<br>');
+    } else {
+        currentChallengeDisplay.textContent = "-";
+    }
+
+    updateStartButtonText();
+    rollDiceBtn.disabled = true;
+    continueGameBtn.disabled = false;
+    selectChallengesBtn.disabled = gameState.challenges.length === 0;
+    undoLastRollBtn.disabled = gameState.playerStateHistory.length === 0;
+}
+
+// Function to continue game
+function continueGame() {
+    if (gameState.challenges.length === 0 || 
+        gameState.players.some(p => p.level >= gameState.challenges.length && p.active && !p.eliminated)) {
+        alert(translations[gameState.currentLanguage].addMoreChallenges);
+        return;
+    }
+    
+    gameState.gameEnded = false;
+    continueGameBtn.disabled = true;
+    const activePlayers = gameState.players.filter(player => !player.eliminated && player.active);
+    
+    if (activePlayers.length > 0) {
+        gameState.gameStarted = true;
+        rollDiceBtn.disabled = false;
+        
+        const maxLevel = Math.max(...activePlayers.map(player => player.level));
+        gameState.currentChallenge = Math.min(maxLevel, gameState.challenges.length - 1);
+        
+        currentChallengeDisplay.textContent = translations[gameState.currentLanguage].continuePlaying;
+        updateStartButtonText();
+        updatePlayerLevelsDisplay(); 
+    }
+}
+
+// Toggle theme (dark/light mode)
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    gameState.isDarkMode = document.body.classList.contains('dark-mode');
+}
+
+// Toggle language
+function toggleLanguage() {
+    gameState.currentLanguage = gameState.currentLanguage === 'es' ? 'en' : 'es';
+    languageToggleBtn.textContent = gameState.currentLanguage.toUpperCase();
+    updateLanguage();
+}
+
+// Update all text based on selected language
+function updateLanguage() {
     const lang = gameState.currentLanguage;
+
     document.getElementById('game-title').textContent = translations[lang].gameTitle;
     document.getElementById('players-title').textContent = translations[lang].playersTitle;
     document.getElementById('challenges-title').textContent = translations[lang].challengesTitle;
     document.getElementById('game-status-title').textContent = translations[lang].gameStatusTitle;
-    document.getElementById('add-player-btn').textContent = translations[lang].addPlayer;
-    document.getElementById('add-challenge-btn').textContent = translations[lang].addChallenge;
-    document.getElementById('start-game-btn').textContent = translations[lang].startGame;
-    document.getElementById('roll-dice-btn').textContent = translations[lang].rollDice;
+    document.getElementById('add-player').textContent = translations[lang].addPlayer;
+    document.getElementById('add-challenge').textContent = translations[lang].addChallenge;
+    updateStartButtonText();
+    document.getElementById('roll-dice').textContent = translations[lang].rollDice;
     document.getElementById('results-title').textContent = translations[lang].resultsTitle;
     document.getElementById('current-challenge-label').textContent = translations[lang].currentChallengeLabel;
-    document.getElementById('player-name-input').placeholder = translations[lang].playerNamePlaceholder;
-    document.getElementById('challenge-name-input').placeholder = translations[lang].challengeNamePlaceholder;
-    document.getElementById('challenge-description-input').placeholder = translations[lang].challengeDescriptionPlaceholder;
-    document.getElementById('footer-text').innerHTML = `${translations[lang].footerText} &copy; ${new Date().getFullYear()}`;
+    document.getElementById('player-name').placeholder = translations[lang].playerNamePlaceholder;
+    document.getElementById('challenge-name').placeholder = translations[lang].challengeNamePlaceholder;
+    document.getElementById('challenge-description').placeholder = translations[lang].challengeDescriptionPlaceholder;
+    document.getElementById('footer-text').textContent = translations[lang].footerText;
     document.getElementById('save-game-btn').textContent = translations[lang].saveGame;
     document.getElementById('load-game-btn').textContent = translations[lang].loadGame;
     document.getElementById('reset-game-btn').textContent = translations[lang].resetData;
-    document.getElementById('import-challenges-btn').textContent = translations[lang].importChallenges;
-    document.getElementById('save-list-btn').textContent = translations[lang].saveList;
-    document.getElementById('import-title').textContent = translations[lang].importTitle;
-    document.getElementById('import-instructions').textContent = translations[lang].importInstructions;
-    document.getElementById('save-list-title').textContent = translations[lang].saveListTitle;
-    document.getElementById('save-list-instructions').textContent = translations[lang].saveListInstructions;
-    document.getElementById('copy-list-text-btn').textContent = translations[lang].copyText;
-    document.getElementById('cancel-save-list-btn').textContent = translations[lang].cancelButton;
-    document.getElementById('load-from-file-btn').textContent = translations[lang].importFile;
+    document.getElementById('load-challenge-list').textContent = translations[lang].loadChallengeList;
+    document.getElementById('continue-game').textContent = translations[lang].continueGame;
+    document.getElementById('select-challenges-btn').textContent = translations[lang].selectChallenges;
+    document.getElementById('delete-selected-challenges-btn').textContent = translations[lang].deleteSelected;
+    document.getElementById('deactivate-selected-challenges-btn').textContent = translations[lang].deactivateSelected;
+    document.getElementById('toggle-deactivated-challenges-btn').textContent = translations[lang].showDeactivated;
+    document.getElementById('select-all-challenges-btn').textContent = translations[lang].selectAll;
+
+    const downloadListModalHeader = downloadChallengeListModal.querySelector('.modal-header h2');
+    if (downloadListModalHeader) {
+        downloadListModalHeader.textContent = translations[lang].downloadListTitle;
+    }
+    const downloadListModalPrompt = downloadChallengeListModal.querySelector('.modal-body p');
+    if (downloadListModalPrompt) {
+        downloadListModalPrompt.textContent = translations[lang].downloadListPrompt;
+    }
+    downloadAllChallengesBtn.textContent = translations[lang].downloadAllChallenges;
+    downloadActiveChallengesBtn.textContent = translations[lang].downloadActiveChallenges;
+    cancelDownloadListBtn.textContent = translations[lang].cancelDownload;
+    downloadSimpleListBtn.textContent = translations[lang].downloadSimpleList;
+
+    const diceRangeLabel = document.getElementById('dice-range-label');
+    if (diceRangeLabel) {
+        diceRangeLabel.textContent = lang === 'es' ? 'Valor máximo de dados:' : 'Maximum dice value:';
+    }
+
+    document.querySelector('label[for="roll-no-challenge-checkbox"]').textContent = translations[lang].rollNoChallengeCheckboxLabel;
+    document.querySelector('label[for="auto-close-modal-checkbox"]').textContent = translations[lang].autoCloseModalCheckboxLabel;
+    document.querySelector('#auto-close-timer-container label').textContent = translations[lang].autoCloseTimerLabel;
+    document.querySelector('label[for="allow-duplicate-rolls-checkbox"]').textContent = translations[lang].allowDuplicateRollsCheckboxLabel;
+
+    // Load Challenge List Modal Translations
+    const loadListModalHeader = loadChallengeListModal.querySelector('.modal-header h2');
+    if (loadListModalHeader) {
+        loadListModalHeader.textContent = translations[lang].loadListTitle;
+    }
+    const loadListModalPrompt = loadChallengeListModal.querySelector('.modal-body p');
+    if (loadListModalPrompt) {
+        loadListModalPrompt.textContent = translations[lang].loadListPrompt;
+    }
+    document.getElementById('load-from-file-btn').textContent = translations[lang].loadFromFile;
+    document.getElementById('load-from-simple-list-btn').textContent = translations[lang].loadSimpleList;
     document.getElementById('load-from-text-btn').textContent = translations[lang].pasteText;
-    document.getElementById('cancel-load-list-btn').textContent = translations[lang].cancelButton;
-    document.getElementById('close-dice-modal').textContent = translations[lang].close;
-    document.getElementById('auto-close-modal-label').textContent = translations[lang].autoCloseModal;
-    document.getElementById('rounds-log-title').textContent = translations[lang].roundsLogTitle;
-}
+    document.getElementById('cancel-load-list-btn').textContent = translations[lang].cancelLoad;
+    pasteTextAreaDiv.querySelector('p').textContent = translations[lang].pasteText + ' ' + translations[lang].challengesTitle.toLowerCase() + ' ' + translations[lang].loadListPrompt.slice(0, translations[lang].loadListPrompt.length -1).toLowerCase() + ':';
+    document.getElementById('clear-paste-text-btn').textContent = translations[lang].resetData + ' ' + translations[lang].instructionsTitle.toLowerCase();
+    document.getElementById('paste-clipboard-text-btn').textContent = translations[lang].pasteClipboard;
+    document.getElementById('confirm-paste-btn').textContent = translations[lang].loadWithPastedText;
 
-// Function to apply theme
-function applyTheme(isDarkMode) {
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        document.getElementById('theme-toggle').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>`;
-    } else {
-        document.body.classList.remove('dark-mode');
-        document.getElementById('theme-toggle').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-icon"></path><circle cx="12" cy="12" r="5" class="sun-icon"></circle><line x1="12" y1="1" x2="12" y2="3" class="sun-icon"></line><line x1="12" y1="21" x2="12" y2="23" class="sun-icon"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="sun-icon"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="sun-icon"></line><line x1="1" y1="12" x2="3" y2="12" class="sun-icon"></line><line x1="21" y1="12" x2="23" y2="12" class="sun-icon"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="sun-icon"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="sun-icon"></line></svg>`;
-    }
-}
+    // Translate Description and Instructions section
+    descriptionInstructionsTitle.textContent = translations[lang].descriptionInstructionsTitle;
+    descriptionTitle.textContent = translations[lang].descriptionTitle;
+    gameTitleLabel.textContent = translations[lang].gameTitleLabel;
+    gameTitleInput.placeholder = translations[lang].gameTitlePlaceholder;
+    gameDescription.placeholder = translations[lang].descriptionPlaceholder;
+    instructionsTitle.textContent = translations[lang].instructionsTitle;
+    gameInstructions.placeholder = translations[lang].instructionsPlaceholder;
 
-// Function to update the entire game state based on host's data
-function updateGameFromHostData(hostGameState) {
-    console.log("Updating game state from host:", hostGameState);
-
-    // Update the local game state with the received state
-    Object.assign(gameState, hostGameState);
-
-    // Call the rendering functions to refresh the UI
-    renderPlayers();
-    renderChallenges();
+    toggleButtons.forEach(button => {
+        const header = button.closest('.section-header');
+        const targetId = header.getAttribute('data-target');
+        const contentSection = document.getElementById(targetId);
+        button.textContent = contentSection.classList.contains('collapsed') ? '+' : '-';
+    });
+    
+    updatePlayerList();
+    updateChallengeList();
     updateCurrentChallengeDisplay();
-    renderRoundsLog();
-    updateGameStatus();
-    renderPlayerLevels();
-
-    // Reapply theme and language in case they were changed by the host
-    applyTheme(gameState.isDarkMode);
-    setLanguage(gameState.currentLanguage);
-
-    // Check game state to show/hide buttons
-    if (gameState.isGameStarted) {
-        startGameBtn.style.display = 'none';
-        rollDiceBtn.style.display = 'block';
-        document.getElementById('add-player-form').style.display = 'none';
-        document.getElementById('add-challenge-form').style.display = 'none';
-        document.getElementById('import-challenges-btn').style.display = 'none';
-    } else {
-        startGameBtn.style.display = 'block';
-        rollDiceBtn.style.display = 'none';
-        document.getElementById('add-player-form').style.display = 'block';
-        document.getElementById('add-challenge-form').style.display = 'block';
-        document.getElementById('import-challenges-btn').style.display = 'block';
-    }
-}
-window.updateGameFromHostData = updateGameFromHostData; // Make it a global function
-
-// Function to make the page read-only for guests
-function makePageReadOnly() {
-    const hostOnlyElements = document.querySelectorAll('.host-only');
-    hostOnlyElements.forEach(el => el.style.display = 'none');
-    
-    // Disable inputs and buttons that guests shouldn't use
-    const inputs = document.querySelectorAll('input, button, textarea');
-    inputs.forEach(input => {
-        if (!input.classList.contains('exit-game-btn') && !input.classList.contains('theme-toggle') && !input.classList.contains('language-toggle')) {
-             input.disabled = true;
-        }
-    });
-
-    document.getElementById('game-title-input').disabled = true;
-    document.getElementById('edit-title-btn').style.display = 'none';
-    document.getElementById('save-title-btn').style.display = 'none';
-    document.getElementById('connection-status').style.display = 'block';
+    undoLastRollBtn.textContent = translations[lang].undoLastRoll;
+    document.getElementById('download-challenge-list-btn').textContent = translations[lang].downloadChallengeList;
+    document.getElementById('clear-paste-text-btn').textContent = translations[lang].resetData;
+    document.getElementById('paste-clipboard-text-btn').textContent = translations[lang].pasteClipboard;
+    document.getElementById('show-last-dice-result').setAttribute('aria-label', lang === 'es' ? 'Mostrar última tirada' : 'Show last roll');
+    exitGameBtn.textContent = translations[lang].exitGame;
 }
 
-function updateGameTitle() {
-    const title = gameTitleInput.value;
-    if (title.trim() !== '') {
-        gameState.gameTitle = title;
-        document.getElementById('game-title').textContent = title;
-        toggleTitleEdit();
-        
-        // Broadcast the updated state
-        if (window.connectionState.role === 'host' && window.broadcastGameState) {
-            window.broadcastGameState(gameState);
-        }
-    } else {
-        showError('Por favor, introduce un título válido.');
+// Update player levels display
+function updatePlayerLevelsDisplay() {
+    playerLevelsList.innerHTML = ''; 
+    if (!gameState.gameStarted) {
+        return; 
     }
-}
-
-function toggleTitleEdit() {
-    const titleDisplay = document.getElementById('game-title');
-    const titleInput = document.getElementById('game-title-input');
-    const editBtn = document.getElementById('edit-title-btn');
-    const saveBtn = document.getElementById('save-title-btn');
-
-    const isEditing = titleInput.style.display === 'block';
-
-    if (isEditing) {
-        titleDisplay.style.display = 'block';
-        titleInput.style.display = 'none';
-        editBtn.style.display = 'inline-block';
-        saveBtn.style.display = 'none';
-    } else {
-        titleDisplay.style.display = 'none';
-        titleInput.style.display = 'block';
-        titleInput.value = gameState.gameTitle;
-        editBtn.style.display = 'none';
-        saveBtn.style.display = 'inline-block';
-    }
-}
-
-function setLanguage(lang) {
-    gameState.currentLanguage = lang;
-    updateTextBasedOnLanguage();
-}
-
-function toggleLanguage() {
-    gameState.currentLanguage = gameState.currentLanguage === 'es' ? 'en' : 'es';
-    setLanguage(gameState.currentLanguage);
-    
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to toggle between light and dark mode
-function toggleTheme() {
-    gameState.isDarkMode = !gameState.isDarkMode;
-    applyTheme(gameState.isDarkMode);
-    
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to handle dice roll and update game state
-function handleDiceRoll() {
-    if (!gameState.isGameStarted) {
-        showError(translations[gameState.currentLanguage].noPlayers);
-        return;
-    }
-    
-    // Reset rolls for the new round
-    gameState.minRoll = null;
-    gameState.minRollPlayer = null;
-
-    // Filter out eliminated players
-    const activePlayers = gameState.players.filter(p => !p.eliminated);
-    
-    if (activePlayers.length === 0) {
-        showError(translations[gameState.currentLanguage].gameOver);
-        return;
-    }
-
-    const currentRoundRolls = [];
-
-    activePlayers.forEach(player => {
-        const roll = Math.floor(Math.random() * 6) + 1;
-        player.lastDiceRoll = roll;
-        player.diceRollsHistory.push(roll);
-        player.totalRolls += 1;
-        currentRoundRolls.push({ name: player.name, roll: roll });
-
-        if (gameState.minRoll === null || roll < gameState.minRoll) {
-            gameState.minRoll = roll;
-            gameState.minRollPlayer = player;
-        } else if (roll === gameState.minRoll) {
-            gameState.minRollPlayer = null;
-        }
-    });
-
-    if (gameState.minRollPlayer) {
-        gameState.minRollPlayer.lowestRolls += 1;
-        gameState.minRollPlayer.eliminated = true;
-    }
-    
-    // Log the round results
-    const roundResult = {
-        round: gameState.roundNumber + 1,
-        challenge: gameState.challenges[gameState.currentChallengeIndex] || { name: translations[gameState.currentLanguage].noChallenges, description: '' },
-        diceResult: generateDiceHtml(currentRoundRolls),
-        minRoll: gameState.minRoll,
-        loser: gameState.minRollPlayer ? gameState.minRollPlayer.name : null
-    };
-    gameState.roundsLogData.push(roundResult);
-    renderRoundsLog();
-
-    // Move to the next challenge
-    gameState.currentChallengeIndex++;
-    if (gameState.currentChallengeIndex >= gameState.challenges.length) {
-        gameState.currentChallengeIndex = 0;
-    }
-    gameState.roundNumber++;
-
-    renderPlayers();
-    renderChallenges();
-    updateGameStatus();
-    updateCurrentChallengeDisplay();
-    
-    showLastDiceResult();
-
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to update the game status message
-function updateGameStatus() {
-    const lang = gameState.currentLanguage;
-    const activePlayersCount = gameState.players.filter(p => !p.eliminated).length;
-    const totalPlayersCount = gameState.players.length;
-
-    if (gameState.isGameStarted) {
-        if (activePlayersCount === 0) {
-            gameStatus.innerHTML = `<span class="game-over">${translations[lang].gameOver}</span>`;
-            
-            // Broadcast the updated state
-            if (window.connectionState.role === 'host' && window.broadcastGameState) {
-                window.broadcastGameState(gameState);
-            }
-        } else if (activePlayersCount === 1) {
-            const winner = gameState.players.find(p => !p.eliminated);
-            gameStatus.innerHTML = `<span class="winner">${translations[lang].winner} ${winner.name}!</span>`;
-            
-            // Broadcast the updated state
-            if (window.connectionState.role === 'host' && window.broadcastGameState) {
-                window.broadcastGameState(gameState);
-            }
-        } else {
-            gameStatus.textContent = `${activePlayersCount} de ${totalPlayersCount} jugadores en la partida. Ronda #${gameState.roundNumber + 1}.`;
-        }
-    } else {
-        gameStatus.textContent = translations[lang].noPlayers;
-    }
-}
-
-// Function to render players on the list
-function renderPlayers() {
-    playerList.innerHTML = '';
-    const sortedPlayers = [...gameState.players].sort((a, b) => {
-        if (a.level !== b.level) {
-            return b.level - a.level; // Sort by level descending
-        }
-        return a.name.localeCompare(b.name); // Sort by name ascending
-    });
-
-    sortedPlayers.forEach(player => {
+    gameState.players.forEach(player => {
         const li = document.createElement('li');
-        li.classList.add('player-list-item');
-        if (player.eliminated) {
-            li.classList.add('eliminated');
-        }
-
-        const nameSpan = document.createElement('span');
-        nameSpan.classList.add('player-name');
-        nameSpan.textContent = player.name;
-
-        const infoSpan = document.createElement('span');
-        infoSpan.classList.add('player-info');
-
-        const levelSpan = document.createElement('span');
-        levelSpan.classList.add('player-level');
-        levelSpan.textContent = `Nivel ${player.level}`;
-
-        const rollsSpan = document.createElement('span');
-        rollsSpan.classList.add('player-rolls');
-        rollsSpan.textContent = `Tiradas: ${player.totalRolls}`;
-
-        const lowestRollsSpan = document.createElement('span');
-        lowestRollsSpan.classList.add('player-lowest-rolls');
-        lowestRollsSpan.textContent = `Tiradas más bajas: ${player.lowestRolls}`;
-        
-        infoSpan.appendChild(levelSpan);
-        infoSpan.appendChild(rollsSpan);
-        infoSpan.appendChild(lowestRollsSpan);
-
-        if (player.eliminated) {
-            const eliminatedSpan = document.createElement('span');
-            eliminatedSpan.classList.add('player-status');
-            eliminatedSpan.textContent = `(${translations[gameState.currentLanguage].isEliminated})`;
-            infoSpan.appendChild(eliminatedSpan);
-        }
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-btn', 'host-only');
-        deleteBtn.textContent = translations[gameState.currentLanguage].deleteBtn;
-        deleteBtn.addEventListener('click', () => {
-            if (confirm(`¿Estás seguro de que quieres eliminar a ${player.name}?`)) {
-                removePlayer(player.name);
-            }
-        });
-
-        li.appendChild(nameSpan);
-        li.appendChild(infoSpan);
-        li.appendChild(deleteBtn);
-
-        playerList.appendChild(li);
+        const challengeNumber = player.level + 1;
+        const statusClass = player.active ? '' : 'inactive-player';
+        const statusText = player.active ? '' : ' (desactivado)';
+        li.innerHTML = `<span class="${statusClass}">${player.name}${statusText}: ${translations[gameState.currentLanguage].nextChallenge} ${challengeNumber} / ${gameState.challenges.length}</span>`;
+        playerLevelsList.appendChild(li);
     });
 }
 
-function renderPlayerLevels() {
-    const playerLevelElements = document.querySelectorAll('.player-level');
-    playerLevelElements.forEach(el => {
-        const playerName = el.parentElement.parentElement.querySelector('.player-name').textContent;
-        const player = gameState.players.find(p => p.name === playerName);
-        if (player) {
-            el.textContent = `Nivel ${player.level}`;
-        }
-    });
-}
-
-// Function to render challenges on the list
-function renderChallenges() {
-    challengeList.innerHTML = '';
-    gameState.challenges.forEach((challenge, index) => {
-        const li = document.createElement('li');
-        li.classList.add('challenge-list-item');
-        if (index === gameState.currentChallengeIndex && gameState.isGameStarted) {
-            li.classList.add('current');
-        }
-
-        const challengeName = document.createElement('div');
-        challengeName.classList.add('challenge-name');
-        challengeName.textContent = challenge.name;
-
-        const descriptionBtn = document.createElement('button');
-        descriptionBtn.classList.add('challenge-description-btn');
-        descriptionBtn.innerHTML = `ⓘ`;
-        descriptionBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleChallengeDescription(li);
-        });
-
-        const descriptionText = document.createElement('div');
-        descriptionText.classList.add('challenge-description-text');
-        descriptionText.textContent = challenge.description || 'Sin descripción.';
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-btn', 'host-only');
-        deleteBtn.textContent = translations[gameState.currentLanguage].deleteBtn;
-        deleteBtn.addEventListener('click', () => {
-            if (confirm(`¿Estás seguro de que quieres eliminar la prueba "${challenge.name}"?`)) {
-                removeChallenge(index);
-            }
-        });
-
-        li.appendChild(challengeName);
-        li.appendChild(descriptionBtn);
-        li.appendChild(descriptionText);
-        li.appendChild(deleteBtn);
-        challengeList.appendChild(li);
-    });
-
-    if (window.connectionState.role === 'host') {
-        new Sortable(challengeList, {
-            animation: 150,
-            onEnd: (evt) => {
-                const [movedItem] = gameState.challenges.splice(evt.oldIndex, 1);
-                gameState.challenges.splice(evt.newIndex, 0, movedItem);
-                
-                // Broadcast the updated state
-                if (window.broadcastGameState) {
-                    window.broadcastGameState(gameState);
-                }
-            }
-        });
-    }
-}
-
-function toggleChallengeDescription(li) {
-    li.classList.toggle('description-expanded');
-}
-
-// Function to render the rounds log
-function renderRoundsLog() {
-    resultsLog.innerHTML = '';
-    gameState.roundsLogData.forEach(round => {
-        const li = document.createElement('li');
-        li.classList.add('result-log-item');
-
-        const header = document.createElement('div');
-        header.classList.add('result-header');
-        header.innerHTML = `Ronda #${round.round}: ${round.challenge.name}`;
-
-        const resultBody = document.createElement('div');
-        resultBody.classList.add('result-body');
-        resultBody.innerHTML = round.diceResult;
-
-        li.appendChild(header);
-        li.appendChild(resultBody);
-        
-        resultsLog.prepend(li); // Add to the top of the list
-    });
-}
-
+// Update current challenge display
 function updateCurrentChallengeDisplay() {
-    if (gameState.challenges.length > 0 && gameState.isGameStarted) {
-        currentChallengeDisplay.textContent = gameState.challenges[gameState.currentChallengeIndex].name;
+    if (!gameState.gameStarted || !gameState.diceRolledInGame) {
+        currentChallengeDisplay.textContent = translations[gameState.currentLanguage].initialStatus;
+        currentChallengeDisplay.dataset.description = gameInstructions.value;
+    } else if (gameState.challenges.length > 0) {
+        const activeChallenges = gameState.challenges.filter(c => c.active);
+        if (activeChallenges.length > 0) {
+             const challengeIndex = Math.min(gameState.currentChallenge, activeChallenges.length - 1);
+             currentChallengeDisplay.textContent = activeChallenges[challengeIndex].name;
+        } else {
+            currentChallengeDisplay.textContent = "-";
+        }
     } else {
-        currentChallengeDisplay.textContent = '---';
+        currentChallengeDisplay.textContent = "-";
     }
 }
 
-// Function to add a player to the game
-function addPlayerToList(name) {
-    if (name.trim() === '') {
-        showError('Por favor, introduce tu nombre');
+// Update the Start/Restart button text based on game state
+function updateStartButtonText() {
+    startGameBtn.textContent = gameState.gameStarted ? 
+        gameState.currentLanguage === 'es' ? 'Reiniciar Juego' : translations[gameState.currentLanguage].restartGame 
+        : translations[gameState.currentLanguage].startGame;
+}
+
+// Open dice results modal
+function openDiceModal() {
+    modal.style.display = "flex";
+    if (autoCloseModalCheckbox.checked) {
+        autoCloseTimerContainer.style.display = 'flex';
+    } else {
+        autoCloseTimerContainer.style.display = 'none';
+    }
+}
+
+// Close dice results modal
+function closeDiceModal() {
+    modal.style.display = "none";
+    const dicePopup = modal.querySelector('.dice-description-popup');
+    if (dicePopup) {
+        dicePopup.classList.remove('show');
+    }
+    showLastDiceResultBtn.disabled = gameState.roundsLogData.length === 0;
+}
+
+// Open save game modal
+function openSaveGameModal() {
+    saveGameModal.style.display = "flex";
+}
+
+// Close save game modal
+function closeSaveGameModal() {
+    saveGameModal.style.display = "none";
+}
+
+// Save game data to a file
+function saveGameData() {
+    const filename = saveFilenameInput.value.trim();
+    if (!filename) {
+        alert(translations[gameState.currentLanguage].saveFilenameAlert || 'Por favor, introduce un nombre de archivo.');
         return;
     }
-    const newPlayer = {
-        name: name,
-        level: 1,
-        eliminated: false,
-        totalRolls: 0,
-        lowestRolls: 0,
-        lastDiceRoll: null,
-        diceRollsHistory: []
+
+    const gameData = {
+        gameState: gameState,
+        gameTitle: gameTitleInput.value,
+        gameDescriptionText: gameDescription.value,
+        gameInstructionsText: gameInstructions.value,
+        diceMaxValue: gameState.diceMaxValue, 
+        allowDuplicateRolls: allowDuplicateRollsCheckbox.checked 
     };
-    gameState.players.push(newPlayer);
-    renderPlayers();
-    playerInput.value = '';
-    
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to add a challenge to the game
-function addChallengeToList(name, description) {
-    if (name.trim() === '') {
-        showError('Por favor, introduce el nombre de la prueba');
-        return;
-    }
-    gameState.challenges.push({ name, description });
-    renderChallenges();
-    challengeNameInput.value = '';
-    challengeDescriptionInput.value = '';
-    
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to remove a player
-function removePlayer(name) {
-    gameState.players = gameState.players.filter(player => player.name !== name);
-    renderPlayers();
-    updateGameStatus();
-    
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to remove a challenge
-function removeChallenge(index) {
-    gameState.challenges.splice(index, 1);
-    renderChallenges();
-    updateCurrentChallengeDisplay();
-    
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to generate the dice HTML based on rolls
-function generateDiceHtml(rolls) {
-    const minRoll = Math.min(...rolls.map(r => r.roll));
-    
-    return rolls.map(roll => {
-        const isLowest = roll.roll === minRoll;
-        const className = isLowest ? 'dice lowest-roll' : 'dice';
-        return `
-            <div class="${className}">
-                ${diceFaces[roll.roll - 1]}
-                <span class="player-name">${roll.name}</span>
-            </div>
-        `;
-    }).join('');
-}
-
-// Function to start the game
-function startGame() {
-    if (gameState.players.length === 0) {
-        showError(translations[gameState.currentLanguage].noPlayers);
-        return;
-    }
-    if (gameState.challenges.length === 0) {
-        showError(translations[gameState.currentLanguage].noChallenges);
-        return;
-    }
-    gameState.isGameStarted = true;
-    gameState.roundNumber = 0;
-    gameState.currentChallengeIndex = 0;
-    gameStatus.textContent = `¡Comienza la partida! Ronda #1`;
-    startGameBtn.style.display = 'none';
-    rollDiceBtn.style.display = 'block';
-    
-    // Hide add player/challenge buttons
-    document.getElementById('add-player-form').style.display = 'none';
-    document.getElementById('add-challenge-form').style.display = 'none';
-    document.getElementById('import-challenges-btn').style.display = 'none';
-    
-    renderPlayers();
-    renderChallenges();
-    updateCurrentChallengeDisplay();
-    
-    // Broadcast the updated state
-    if (window.connectionState.role === 'host' && window.broadcastGameState) {
-        window.broadcastGameState(gameState);
-    }
-}
-
-// Function to show error message in a modal
-function showError(message) {
-    const errorModal = document.getElementById('error-modal');
-    document.getElementById('error-message').textContent = message;
-    errorModal.style.display = 'flex';
-}
-
-function hideErrorModal() {
-    const errorModal = document.getElementById('error-modal');
-    errorModal.style.display = 'none';
-}
-
-function saveGame() {
-    if (window.connectionState.role === 'guest') {
-        showError('Solo el anfitrión puede guardar la partida.');
-        return;
-    }
-    saveGameModal.style.display = 'flex';
-    document.getElementById('save-filename-input').focus();
-}
-
-function handleSaveGame() {
-    const filename = saveFileNameInput.value.trim();
-    if (filename === '') {
-        showError(translations[gameState.currentLanguage].saveGamePrompt);
-        return;
-    }
-    const dataStr = JSON.stringify(gameState, null, 2);
-    const blob = new Blob([dataStr], { type: "application/json" });
+    const gameDataString = JSON.stringify(gameData);
+    const blob = new Blob([gameDataString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -784,260 +1262,697 @@ function handleSaveGame() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    saveGameModal.style.display = 'none';
+    closeSaveGameModal();
 }
 
-function loadGame() {
-    if (window.connectionState.role === 'guest') {
-        showError('Solo el anfitrión puede cargar una partida.');
-        return;
-    }
-    document.getElementById('load-modal').style.display = 'flex';
-}
+// Load game data from a file
+function loadGameData() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
 
-function handleLoadGame(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const loadedState = JSON.parse(e.target.result);
-            Object.assign(gameState, loadedState);
-            renderPlayers();
-            renderChallenges();
-            updateGameStatus();
-            updateCurrentChallengeDisplay();
-            renderRoundsLog();
-            
-            if (window.connectionState.role === 'host' && window.broadcastGameState) {
-                window.broadcastGameState(gameState);
+        const reader = new FileReader();
+        reader.onload = event => {
+            try {
+                const loadedData = JSON.parse(event.target.result);
+                if (loadedData && loadedData.gameState && loadedData.gameState.players && loadedData.gameState.challenges) {
+                    Object.assign(gameState, loadedData.gameState);
+                    gameTitleInput.value = loadedData.gameTitle || '';
+                    gameDescription.value = loadedData.gameDescriptionText || '';
+                    gameInstructions.value = loadedData.gameInstructionsText || '';
+                    if (loadedData.diceMaxValue !== undefined) {
+                        gameState.diceMaxValue = loadedData.diceMaxValue;
+                        diceMaxValueInput.value = gameState.diceMaxValue;
+                    }
+                    if (loadedData.allowDuplicateRolls !== undefined) {
+                        allowDuplicateRollsCheckbox.checked = loadedData.allowDuplicateRolls;
+                    }
+                    updateUIFromState();
+                    updateLanguage();
+                    alert(translations[gameState.currentLanguage].gameLoadedSuccessfully || 'Partida cargada con éxito!');
+                } else {
+                    alert(translations[gameState.currentLanguage].invalidSaveFile || 'Archivo de partida no válido.');
+                }
+            } catch (error) {
+                console.error('Error al cargar la partida:', error);
+                alert(translations[gameState.currentLanguage].saveLoadError || 'Error al leer el archivo de partida.');
             }
-
-            document.getElementById('load-modal').style.display = 'none';
-            alert('Partida cargada exitosamente.');
-
-        } catch (error) {
-            alert('Error al cargar la partida. Asegúrate de que el archivo es un JSON válido.');
-            console.error(error);
-        }
+        };
+        reader.onerror = () => {
+            alert(translations[gameState.currentLanguage].saveLoadError || 'Error al leer el archivo de partida.');
+        };
+        reader.readAsText(file);
     };
-    reader.readAsText(file);
+
+    input.click();
 }
 
-function resetGame() {
-    if (window.connectionState.role === 'guest') {
-        showError('Solo el anfitrión puede reiniciar la partida.');
-        return;
-    }
+// Load challenges from a text file
+function loadChallengeListFromFile() {
+    closeLoadChallengeListModal(); 
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.txt, .docx';
 
-    if (confirm(translations[gameState.currentLanguage].resetGameConfirmation)) {
-        gameState.isGameStarted = false;
-        gameState.roundNumber = 0;
-        gameState.currentChallengeIndex = 0;
-        gameState.players.forEach(p => {
-            p.level = 1;
-            p.eliminated = false;
-            p.totalRolls = 0;
-            p.lowestRolls = 0;
-            p.lastDiceRoll = null;
-            p.diceRollsHistory = [];
-        });
-        gameState.roundsLogData = [];
-        
-        renderPlayers();
-        renderChallenges();
-        updateGameStatus();
-        updateCurrentChallengeDisplay();
-        renderRoundsLog();
+    input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-        startGameBtn.style.display = 'block';
-        rollDiceBtn.style.display = 'none';
-        
-        // Show add player/challenge buttons
-        document.getElementById('add-player-form').style.display = 'block';
-        document.getElementById('add-challenge-form').style.display = 'block';
-        document.getElementById('import-challenges-btn').style.display = 'block';
-        
-        // Broadcast the updated state
-        if (window.connectionState.role === 'host' && window.broadcastGameState) {
-            window.broadcastGameState(gameState);
-        }
-    }
+        const reader = new FileReader();
+        reader.onload = event => {
+            loadChallengesFromTextContent(event.target.result);
+        };
+        reader.onerror = () => {
+            alert(translations[gameState.currentLanguage].fileLoadError || 'Error al leer el archivo.');
+        };
+        reader.readAsText(file);
+    };
+
+    input.click();
 }
 
-function saveChallengesToLocalStorage() {
-    localStorage.setItem('challenges', JSON.stringify(gameState.challenges));
+function loadChallengeListFromText() {
+    const pastedTextContent = pastedTextInput.value;
+    loadChallengesFromTextContent(pastedTextContent);
+    closeLoadChallengeListModal();
 }
 
-function loadChallengesFromLocalStorage() {
-    const savedChallenges = localStorage.getItem('challenges');
-    if (savedChallenges) {
-        gameState.challenges = JSON.parse(savedChallenges);
-    }
-}
+function loadChallengesFromTextContent(fileContent) {
+    try {
+        const lines = fileContent.split(/\r\n|\r|\n/);
+        let challengesFromFile = [];
+        let gameTitleFromFile = "";
+        let gameDescriptionFromFile = "";
+        let gameInstructionsFromFile = "";
+        let readingInstructions = false;
+        let readingProofToShare = false;
+        let currentChallengeName = "";
+        let currentChallengeDescription = "";
 
-// Function to show the dice roll result in a modal
-function showLastDiceResult() {
-    if (gameState.roundsLogData.length === 0) {
-        return;
-    }
-    
-    const lastRound = gameState.roundsLogData[gameState.roundsLogData.length - 1];
-    modalDiceContainer.innerHTML = lastRound.diceResult;
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
 
-    const diceElements = modalDiceContainer.querySelectorAll('.dice');
-    diceElements.forEach(dice => {
-        const playerNameDiv = dice.querySelector('.player-name');
-        if (playerNameDiv) {
-            const playerName = playerNameDiv.textContent;
-            const player = gameState.players.find(p => p.name === playerName);
-            if (player) {
-                dice.addEventListener('click', () => showDicePopup(player));
+            if (i === 0 && line !== "") {
+                gameTitleFromFile = line;
+            } else if (i === 1 && line !== "") {
+                gameDescriptionFromFile = line;
+            } else if (line === "Initial instructions") {
+                readingInstructions = true;
+                readingProofToShare = false;
+            } else if (readingInstructions && line !== "Instruction") {
+                gameInstructionsFromFile = line;
+                readingInstructions = false;
+            } else if (line === "Instruction") {
+                readingProofToShare = false;
+                currentChallengeName = lines[i + 1].trim();
+                i++; 
+            } else if (line === "Proof to share") {
+                readingProofToShare = true;
+                currentChallengeDescription = lines[i + 1].trim();
+                i++; 
+                if (currentChallengeName) {
+                    challengesFromFile.push({ name: currentChallengeName, active: true, description: currentChallengeDescription });
+                    currentChallengeName = "";
+                    currentChallengeDescription = "";
+                }
+            } else if (line.startsWith("Loss nº")) {
             }
+        }
+
+        const challengeObjectsFromFile = challengesFromFile;
+
+        if (gameState.challenges.length === 0) {
+            gameState.challenges = challengeObjectsFromFile;
+            updateChallengeList();
+            alert(translations[gameState.currentLanguage].challengesReplaced);
+        } else if (confirm(translations[gameState.currentLanguage].replaceChallengesConfirmation)) {
+            gameState.challenges = challengeObjectsFromFile;
+            updateChallengeList();
+            alert(translations[gameState.currentLanguage].challengesReplaced);
+        } else if (confirm(translations[gameState.currentLanguage].appendChallengesConfirmation)) {
+            gameState.challenges = gameState.challenges.concat(challengeObjectsFromFile);
+            updateChallengeList();
+            alert(`${translations[gameState.currentLanguage].challengesAdded} ${challengesFromFile.length} ${translations[gameState.currentLanguage].challengesFromFile}`);
+        } else {
+        }
+
+        if (gameTitleFromFile) {
+            gameTitleInput.value = gameTitleFromFile;
+        } else {
+            gameTitleInput.value = "";
+        }
+        if (gameDescriptionFromFile) {
+            gameDescription.value = gameDescriptionFromFile;
+        } else {
+            gameDescription.value = "";
+        }
+        if (gameInstructionsFromFile) {
+            gameInstructions.value = gameInstructionsFromFile;
+        } else {
+            gameInstructions.value = "";
+        }
+        selectChallengesBtn.disabled = gameState.challenges.length === 0;
+        updateCurrentChallengeDisplay();
+        updatePlayerLevelsDisplay();
+
+    } catch (error) {
+        console.error(translations[gameState.currentLanguage].challengeListLoadError || 'Error al cargar la lista de Challenges:', error);
+        alert(translations[gameState.currentLanguage].fileLoadError || 'Error al leer el archivo.');
+    }
+}
+
+// Update UI based on game state
+function updateUIFromState() {
+    updatePlayerList();
+    updateChallengeList();
+    updateCurrentChallengeDisplay();
+    updateStartButtonText();
+    rollDiceBtn.disabled = !gameState.gameStarted;
+    updatePlayerLevelsDisplay();
+    selectChallengesBtn.disabled = gameState.challenges.length === 0;
+
+    if (gameState.roundsLogData && gameState.roundsLogData.length > 0) {
+        roundsLog.innerHTML = '';
+        gameState.roundsLogData.forEach(roundData => {
+            const roundEntry = document.createElement('div');
+            roundEntry.classList.add('round-entry');
+            roundEntry.innerHTML = roundData.html;
+            roundsLog.prepend(roundEntry);
+        });
+    }
+    updateDeactivatedChallengeList(); 
+    showLastDiceResultBtn.disabled = gameState.roundsLogData.length === 0;
+}
+
+// Reset all game data
+function resetGameData() {
+    if (confirm(translations[gameState.currentLanguage].resetConfirmation)) {
+        gameState.players = [];
+        gameState.challenges = [];
+        gameState.currentChallenge = 0;
+        gameState.gameStarted = false;
+        gameState.roundsLogData = [];
+        gameState.deactivatedChallenges = []; 
+        gameState.diceMaxValue = 10; 
+        diceMaxValueInput.value = 10; 
+
+        gameTitleInput.value = '';
+        gameDescription.value = '';
+        gameInstructions.value = '';
+
+        updatePlayerList();
+        updateChallengeList();
+        updateDeactivatedChallengeList();
+        updateCurrentChallengeDisplay();
+        updateStartButtonText();
+        rollDiceBtn.disabled = true;
+        diceContainer.innerHTML = '';
+        roundResults.innerHTML = '';
+        modalDiceContainer.innerHTML = '';
+        roundsLog.innerHTML = '';
+        playerLevelsList.innerHTML = '';
+        selectChallengesBtn.disabled = gameState.challenges.length === 0;
+
+        rollNoChallengeCheckbox.checked = false; 
+        allowDuplicateRollsCheckbox.checked = false; 
+    }
+}
+
+// Toggle select challenges
+function toggleSelectChallenges() {
+    challengesSection.classList.toggle('selecting-challenges');
+    challengeActionsDiv.style.display = challengesSection.classList.contains('selecting-challenges') ? 'block' : 'none';
+    const selectChallengesBtn = document.getElementById('select-challenges-btn');
+    selectChallengesBtn.textContent = challengesSection.classList.contains('selecting-challenges') ? translations[gameState.currentLanguage].cancelSelection : translations[gameState.currentLanguage].selectChallenges;
+
+    const selectAllChallengesBtn = document.getElementById('select-all-challenges-btn'); 
+    selectAllChallengesBtn.textContent = challengesSection.classList.contains('selecting-challenges') ? translations[gameState.currentLanguage].selectAll : '';
+}
+
+// Delete selected challenges
+function deleteSelectedChallenges() {
+    if (confirm(translations[gameState.currentLanguage].deleteChallengesConfirmation || '¿Estás seguro de que quieres eliminar las pruebas seleccionadas?')) {
+        const checkboxes = document.querySelectorAll('.challenge-checkbox:checked');
+        let indicesToDelete = [];
+        checkboxes.forEach(checkbox => {
+            indicesToDelete.push(parseInt(checkbox.dataset.index));
+        });
+
+        indicesToDelete.sort((a, b) => b - a);
+
+        indicesToDelete.forEach(index => {
+            gameState.challenges.splice(index, 1);
+        });
+
+        toggleSelectChallenges(); 
+        updateChallengeList();
+        updateCurrentChallengeDisplay();
+        updatePlayerLevelsDisplay(); 
+        selectChallengesBtn.disabled = gameState.challenges.length === 0;
+    }
+}
+
+// Deactivate selected challenges
+function deactivateSelectedChallenges() {
+    const checkboxes = document.querySelectorAll('.challenge-checkbox:checked');
+    let deactivatedCount = 0;
+    checkboxes.forEach(checkbox => {
+        const index = parseInt(checkbox.dataset.index);
+        if (gameState.challenges[index].active) {
+            gameState.challenges[index].active = false;
+            gameState.deactivatedChallenges.push(gameState.challenges[index]); 
+            deactivatedCount++;
         }
     });
-    
-    openDiceModal();
-}
 
-function showDicePopup(player) {
-    modalTitle.textContent = translations[gameState.currentLanguage].diceInfo;
-    modalPlayerName.textContent = translations[gameState.currentLanguage].diceDetails + player.name;
-    modalLowestRoll.textContent = translations[gameState.currentLanguage].lowestRollsHeader + ' ' + player.lowestRolls;
-    modalRollHistory.innerHTML = `<h3>${translations[gameState.currentLanguage].historyHeader}</h3>` + player.diceRollsHistory.map((roll, index) => `<span>Ronda ${index + 1}: ${diceFaces[roll - 1]} (${roll})</span>`).join('<br>');
-    openDiceModal();
-}
+    gameState.challenges = gameState.challenges.filter(challenge => challenge.active);
 
-function openDiceModal() {
-    diceModal.style.display = 'flex';
-    if (autoCloseModalCheckbox.checked) {
-        autoCloseTimerContainer.style.display = 'flex';
-        let timeLeft = 10;
-        autoCloseTimerText.textContent = timeLeft;
-        
-        if (autoCloseTimer) {
-            clearInterval(autoCloseTimer);
-        }
-        
-        autoCloseTimer = setInterval(() => {
-            timeLeft--;
-            autoCloseTimerText.textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(autoCloseTimer);
-                closeDiceModal();
-            }
-        }, 1000);
+    toggleSelectChallenges(); 
+    updateChallengeList();
+    updateDeactivatedChallengeList(); 
+    updateCurrentChallengeDisplay();
+    updatePlayerLevelsDisplay();
+    selectChallengesBtn.disabled = gameState.challenges.length === 0;
+
+    if (deactivatedCount > 0) {
+        alert(`${translations[gameState.currentLanguage].challengesDeactivatedAlert || 'Se han desactivado'} ${deactivatedCount} ${translations[gameState.currentLanguage].challengesText || 'pruebas'}.`);
     } else {
-        autoCloseTimerContainer.style.display = 'none';
+        alert(translations[gameState.currentLanguage].noChallengesDeactivatedAlert || 'No se ha seleccionado ninguna prueba para desactivar.');
     }
 }
 
-function closeDiceModal() {
-    diceModal.style.display = 'none';
-    if (autoCloseTimer) {
-        clearInterval(autoCloseTimer);
-        autoCloseTimer = null;
-    }
-}
-
-function showImportModal() {
-    if (window.connectionState.role === 'guest') {
-        showError('Solo el anfitrión puede importar pruebas.');
-        return;
-    }
-    importModal.style.display = 'flex';
-    document.getElementById('load-from-text-btn').style.display = 'block';
-    document.getElementById('paste-text-area').style.display = 'none';
-    pastedTextInput.value = '';
-}
-
-function importFromFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const challengesFromFile = JSON.parse(e.target.result);
-            if (Array.isArray(challengesFromFile)) {
-                gameState.challenges = challengesFromFile;
-                renderChallenges();
-                updateCurrentChallengeDisplay();
-                saveChallengesToLocalStorage();
-                alert('Pruebas importadas exitosamente.');
-                importModal.style.display = 'none';
-                
-                // Broadcast the updated state
-                if (window.connectionState.role === 'host' && window.broadcastGameState) {
-                    window.broadcastGameState(gameState);
-                }
-            } else {
-                alert('El archivo no contiene un formato de lista de pruebas válido.');
-            }
-        } catch (error) {
-            alert('Error al leer el archivo. Asegúrate de que es un JSON válido.');
-            console.error(error);
-        }
-    };
-    reader.readAsText(file);
-}
-
-function showPasteArea() {
-    pasteTextArea.style.display = 'block';
-}
-
-function loadFromPastedText() {
-    try {
-        const challengesFromText = JSON.parse(pastedTextInput.value);
-        if (Array.isArray(challengesFromText)) {
-            gameState.challenges = challengesFromText;
-            renderChallenges();
-            updateCurrentChallengeDisplay();
-            saveChallengesToLocalStorage();
-            alert('Pruebas importadas exitosamente.');
-            importModal.style.display = 'none';
-            
-            // Broadcast the updated state
-            if (window.connectionState.role === 'host' && window.broadcastGameState) {
-                window.broadcastGameState(gameState);
-            }
-        } else {
-            alert('El texto no contiene un formato de lista de pruebas válido.');
-        }
-    } catch (error) {
-        alert('Error al analizar el texto. Asegúrate de que es un JSON válido.');
-    }
-}
-
-function showSaveListModal() {
-    if (gameState.challenges.length === 0) {
-        showError(translations[gameState.currentLanguage].noChallengesToSave);
-        return;
-    }
-    const dataStr = JSON.stringify(gameState.challenges, null, 2);
-    saveListTextarea.value = dataStr;
-    saveListModal.style.display = 'flex';
-}
-
-function copyListText() {
-    saveListTextarea.select();
-    navigator.clipboard.writeText(saveListTextarea.value)
-        .then(() => {
-            alert('Lista de pruebas copiada al portapapeles!');
-        })
-        .catch(err => {
-            console.error('Error al copiar: ', err);
-            alert('Error al copiar la lista. Intenta copiarla manualmente.');
+// Update the deactivated challenge list in the UI
+function updateDeactivatedChallengeList() {
+    deactivatedChallengeList.innerHTML = '';
+    if (gameState.deactivatedChallenges.length > 0) {
+        gameState.deactivatedChallenges.forEach((challenge, index) => {
+            const li = document.createElement('li');
+            li.textContent = challenge.name;
+            li.addEventListener('dblclick', () => reactivateChallenge(index)); 
+            li.title = translations[gameState.currentLanguage].deactivatedChallengeTooltip; 
+            deactivatedChallengeList.appendChild(li);
         });
+    } else {
+        const li = document.createElement('li');
+        li.textContent = translations[gameState.currentLanguage].noDeactivatedChallenges; 
+        deactivatedChallengeList.appendChild(li);
+    }
 }
 
-function hideSaveListModal() {
-    saveListModal.style.display = 'none';
+// Reactivate a deactivated challenge
+function reactivateChallenge(index) {
+    const challengeToReactivate = gameState.deactivatedChallenges.splice(index, 1)[0]; 
+    challengeToReactivate.active = true; 
+    gameState.challenges.push(challengeToReactivate); 
+    updateChallengeList(); 
+    updateDeactivatedChallengeList(); 
+    updateCurrentChallengeDisplay(); 
+    updatePlayerLevelsDisplay();
+    selectChallengesBtn.disabled = gameState.challenges.length === 0;
 }
 
-function hideImportModal() {
-    importModal.style.display = 'none';
+// Toggle visibility of deactivated challenges list
+function toggleDeactivatedChallengesList() {
+    deactivatedChallengeList.style.display = deactivatedChallengeList.style.display === 'none' ? 'block' : 'none';
+    const toggleDeactivatedChallengesBtn = document.getElementById('toggle-deactivated-challenges-btn');
+    toggleDeactivatedChallengesBtn.textContent = deactivatedChallengeList.style.display === 'block' ? translations[gameState.currentLanguage].hideDeactivated : translations[gameState.currentLanguage].showDeactivated;
+}
+
+// Function to toggle select all checkboxes
+function toggleSelectAllChallenges() {
+    const checkboxes = document.querySelectorAll('.challenge-checkbox');
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked); 
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = !allChecked; 
+    });
+
+    const selectAllChallengesBtn = document.getElementById('select-all-challenges-btn'); 
+    selectAllChallengesBtn.textContent = allChecked ? translations[gameState.currentLanguage].selectAll : translations[gameState.currentLanguage].deselectAll;
+}
+
+// Function to open download challenge list modal
+function openDownloadChallengeListModal() {
+    downloadChallengeListModal.style.display = "flex";
+}
+
+// Function to close download challenge list modal
+function closeDownloadChallengeListModal() {
+    downloadChallengeListModal.style.display = "none";
+}
+
+// Function to generate challenge list text based on type (all/active)
+function generateChallengeListText(type) {
+    let challengesToDownload;
+    if (type === 'active') {
+        challengesToDownload = gameState.challenges.filter(challenge => challenge.active);
+    } else if (type === 'simple') {
+        if (gameState.deactivatedChallenges.length > 0 && confirm(translations[gameState.currentLanguage].includeDeactivatedChallenges)) {
+            challengesToDownload = [...gameState.challenges, ...gameState.deactivatedChallenges];
+        } else {
+            challengesToDownload = gameState.challenges;
+        }
+    }
+     else {
+        challengesToDownload = [...gameState.challenges, ...gameState.deactivatedChallenges];
+    }
+
+    let textContent = "";
+
+    if (type === 'simple') {
+        challengesToDownload.forEach(challenge => {
+            textContent += challenge.name + "\r\n";
+        });
+    } else {
+        textContent += gameTitleInput.value + "\r\n";
+        textContent += gameDescription.value + "\r\n";
+        textContent += "Initial instructions\r\n";
+        textContent += gameInstructions.value + "\r\n";
+
+        challengesToDownload.forEach(challenge => {
+            textContent += "Instruction\r\n";
+            textContent += challenge.name + "\r\n";
+            textContent += "Proof to share\r\n";
+            textContent += challenge.description + "\r\n";
+        });
+    }
+
+
+    return textContent;
+}
+
+// Function to initiate text file download
+function downloadChallengeList(type) {
+    const text = generateChallengeListText(type);
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `challenge-list-${type}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    closeDownloadChallengeListModal();
+}
+
+// Function to undo the last dice roll
+function undoLastRoll() {
+    if (gameState.playerStateHistory.length === 0) {
+        alert(translations[gameState.currentLanguage].noUndoAvailable || 'No hay tirada anterior para anular');
+        return;
+    }
+
+    if (!confirm(translations[gameState.currentLanguage].undoConfirmation || '¿Estás seguro de que quieres anular la última tirada?')) {
+        return;
+    }
+
+    gameState.players = gameState.playerStateHistory.pop();
+    
+    if (gameState.roundsLogData.length > 0) {
+        gameState.roundsLogData.pop();
+        
+        if (roundsLog.firstChild) {
+            roundsLog.removeChild(roundsLog.firstChild);
+        }
+    }
+    
+    currentChallengeDisplay.textContent = translations[gameState.currentLanguage].repeatRoll;
+    
+    updatePlayerLevelsDisplay();
+    
+    if (gameState.gameEnded) {
+        gameState.gameStarted = true;
+        gameState.gameEnded = false;
+        rollDiceBtn.disabled = false;
+    }
+    
+    undoLastRollBtn.disabled = gameState.playerStateHistory.length === 0;
+}
+
+// Function to open load challenge list modal
+function openLoadChallengeListModal() {
+    loadChallengeListModal.style.display = "flex";
+    pasteTextAreaDiv.style.display = 'none'; 
+}
+
+// Function to close load challenge list modal
+function closeLoadChallengeListModal() {
+    loadChallengeListModal.style.display = "none";
+    pasteTextAreaDiv.style.display = 'none'; 
+}
+
+// Function to open paste text area in load challenge list modal
+function openPasteTextArea() {
+    pasteTextAreaDiv.style.display = 'block';
+}
+
+// Load a simple list of challenges where each line is a challenge name
+function loadSimpleList() {
+    closeLoadChallengeListModal();
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.txt';
+
+    input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = event => {
+            try {
+                const lines = event.target.result.split(/\r\n|\r|\n/);
+                let challengesFromFile = [];
+
+                lines.forEach(line => {
+                    const challengeName = line.trim();
+                    if (challengeName) {
+                        challengesFromFile.push({ 
+                            name: challengeName, 
+                            active: true, 
+                            description: '' 
+                        });
+                    }
+                });
+
+                if (challengesFromFile.length > 0) {
+                    if (gameState.challenges.length === 0) {
+                        gameState.challenges = challengesFromFile;
+                        updateChallengeList();
+                        alert(translations[gameState.currentLanguage].challengesReplaced);
+                    } else if (confirm(translations[gameState.currentLanguage].replaceChallengesConfirmation)) {
+                        gameState.challenges = challengesFromFile;
+                        updateChallengeList();
+                        alert(translations[gameState.currentLanguage].challengesReplaced);
+                    } else if (confirm(translations[gameState.currentLanguage].appendChallengesConfirmation)) {
+                        gameState.challenges = gameState.challenges.concat(challengesFromFile);
+                        updateChallengeList();
+                        alert(`${translations[gameState.currentLanguage].challengesAdded} ${challengesFromFile.length} ${translations[gameState.currentLanguage].challengesFromFile}`);
+                    }
+                    selectChallengesBtn.disabled = gameState.challenges.length === 0;
+                } else {
+                    alert(translations[gameState.currentLanguage].noChallengesInFile || 'No se encontraron pruebas en el archivo.');
+                }
+            } catch (error) {
+                console.error(translations[gameState.currentLanguage].simpleListLoadError || 'Error al cargar la lista simple:', error);
+                alert(translations[gameState.currentLanguage].fileLoadError || 'Error al leer el archivo.');
+            }
+        };
+        reader.onerror = () => {
+            alert(translations[gameState.currentLanguage].fileLoadError || 'Error al leer el archivo.');
+        };
+        reader.readAsText(file);
+    };
+
+    input.click();
+}
+
+// Setup the challenge tooltip
+function setupChallengeTooltip() {
+    let tooltip = document.getElementById('challenge-tooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'challenge-tooltip';
+        currentChallengeDiv.appendChild(tooltip);
+    }
+
+    currentChallengeDiv.addEventListener('mouseover', function(event) {
+        const playerElement = event.target.closest('.player-challenge');
+        if (playerElement && playerElement.dataset.description) {
+            tooltip.textContent = playerElement.dataset.description;
+            tooltip.style.display = 'block';
+            tooltip.style.width = `${currentChallengeDisplay.offsetWidth}px`;
+            tooltip.style.left = '50%';
+            tooltip.style.top = `${currentChallengeDisplay.getBoundingClientRect().bottom + 5}px`;
+            setTimeout(() => tooltip.style.opacity = '1', 10);
+        } else if (currentChallengeDisplay.textContent === translations[gameState.currentLanguage].initialStatus &&
+                   (event.target === currentChallengeDisplay || event.target.parentElement === currentChallengeDisplay)) {
+            tooltip.textContent = gameInstructions.value;
+            tooltip.style.display = 'block';
+            tooltip.style.left = '50%';
+            tooltip.style.top = `${currentChallengeDisplay.getBoundingClientRect().bottom + 5}px`;
+            tooltip.style.width = `${currentChallengeDisplay.offsetWidth}px`;
+            setTimeout(() => tooltip.style.opacity = '1', 10);
+        }
+    });
+
+    currentChallengeDiv.addEventListener('mouseout', function(event) {
+        if (event.target.closest('.player-challenge') ||
+            (currentChallengeDisplay.textContent === translations[gameState.currentLanguage].initialStatus &&
+             (event.target === currentChallengeDisplay || event.target.parentElement === currentChallengeDisplay))) {
+            tooltip.style.opacity = '0';
+            setTimeout(() => tooltip.style.display = 'none', 300);
+        }
+    });
+}
+
+// Setup the current challenge description popup
+function setupCurrentChallengePopup() {
+    const challengePopup = document.createElement('div');
+    challengePopup.className = 'challenge-description-popup';
+    challengePopup.innerHTML = `
+        <div class="popup-header">
+            <h4 class="popup-title"></h4>
+            <button class="popup-close-button">×</button>
+        </div>
+        <div class="popup-content"></div>
+    `;
+    currentChallengeDiv.appendChild(challengePopup);
+    const popupContent = challengePopup.querySelector('.popup-content');
+    const popupTitle = challengePopup.querySelector('.popup-title');
+    const closePopupButton = challengePopup.querySelector('.popup-close-button');
+
+    closePopupButton.addEventListener('click', () => {
+        challengePopup.classList.remove('show');
+    });
+
+    currentChallengeDiv.addEventListener('click', function(event) {
+        const playerElement = event.target.closest('.player-challenge');
+        if (playerElement && playerElement.dataset.description) {
+            popupTitle.textContent = playerElement.textContent.split(':')[0].trim();
+            popupContent.textContent = playerElement.dataset.description;
+            challengePopup.classList.add('show');
+        } else if (currentChallengeDisplay.textContent === translations[gameState.currentLanguage].initialStatus &&
+                   (event.target === currentChallengeDisplay || event.target.parentElement === currentChallengeDisplay)) {
+            popupTitle.textContent = translations[gameState.currentLanguage].instructionsTitle;
+            popupContent.textContent = gameInstructions.value;
+            challengePopup.classList.add('show');
+        } else {
+            challengePopup.classList.remove('show'); // Hide if click outside player or initial status
+        }
+    });
+}
+
+// Setup the dice description popup
+function setupDicePopup() {
+    const dicePopup = document.createElement('div');
+    dicePopup.className = 'dice-description-popup';
+    dicePopup.innerHTML = `
+        <div class="popup-header">
+            <h4 class="popup-title"></h4>
+            <button class="popup-close-button">×</button>
+        </div>
+        <div class="popup-content"></div>
+    `;
+    modal.appendChild(dicePopup); // Append to modal for overlay effect
+    const popupContent = dicePopup.querySelector('.popup-content');
+    const popupTitle = dicePopup.querySelector('.popup-title');
+    const closePopupButton = dicePopup.querySelector('.popup-close-button');
+
+    closePopupButton.addEventListener('click', () => {
+        dicePopup.classList.remove('show');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            dicePopup.classList.remove('show'); // Close popup when clicking outside modal content
+        }
+    });
+}
+
+// Function to show the dice popup with player's challenge information
+function showDicePopup(player) {
+    const dicePopup = modal.querySelector('.dice-description-popup');
+    const popupTitle = dicePopup.querySelector('.popup-title');
+    const popupContent = dicePopup.querySelector('.popup-content');
+
+    const challengeIndex = Math.min(player.level -1 , gameState.challenges.length - 1);
+    const currentChallenge = gameState.challenges[challengeIndex];
+
+    popupTitle.textContent = `${player.name}: ${currentChallenge.name}`;
+    popupContent.textContent = currentChallenge.description;
+    dicePopup.classList.add('show');
+}
+
+// Update dice max value
+function updateDiceMaxValue() {
+    const newValue = parseInt(diceMaxValueInput.value);
+    if (isNaN(newValue) || newValue < 0) {
+        diceMaxValueInput.value = gameState.diceMaxValue;
+        return;
+    }
+
+    if (newValue > 25) {
+        diceMaxValueInput.value = 25;
+        gameState.diceMaxValue = 25;
+        return;
+    }
+
+    if (!allowDuplicateRollsCheckbox.checked) {
+        const activePlayersCount = gameState.players.filter(player => player.active).length;
+        if (newValue < activePlayersCount - 1 && activePlayersCount > 1) {
+            diceRangeError.textContent = translations[gameState.currentLanguage].diceValueError;
+            diceRangeError.style.display = 'block';
+            diceMaxValueInput.value = gameState.diceMaxValue; 
+            updateRollDiceButtonState();
+            return;
+        }
+    }
+
+    gameState.diceMaxValue = newValue;
+    diceRangeError.style.display = 'none';
+    updateRollDiceButtonState();
+    updateDiceMaxValueInputBasedOnPlayers(); 
+}
+
+function updateDiceMaxValueInputBasedOnPlayers() {
+    if (!allowDuplicateRollsCheckbox.checked) {
+        const activePlayersCount = gameState.players.filter(player => player.active).length;
+        const minDiceValue = Math.max(0, activePlayersCount - 1);
+        if (gameState.diceMaxValue < minDiceValue) {
+            gameState.diceMaxValue = minDiceValue;
+            diceMaxValueInput.value = minDiceValue;
+        }
+        updateRollDiceButtonState();
+    }
+}
+
+// Update UI based on dice max value and active players
+function updateRollDiceButtonState() {
+    const activePlayersCount = gameState.players.filter(player => player.active).length;
+    rollDiceBtn.disabled = gameState.gameStarted && (!rollNoChallengeCheckbox.checked) && 
+        (!allowDuplicateRollsCheckbox.checked && (gameState.diceMaxValue < activePlayersCount - 1 && activePlayersCount > 1));
+    
+    if (gameState.gameEnded && rollNoChallengeCheckbox.checked) {
+        rollDiceBtn.disabled = false;
+    }
+}
+
+allowDuplicateRollsCheckbox.addEventListener('change', () => {
+    if (!allowDuplicateRollsCheckbox.checked) {
+        updateDiceMaxValueInputBasedOnPlayers();
+    }
+    updateRollDiceButtonState(); 
+});
+
+const originalUpdatePlayerList = updatePlayerList;
+updatePlayerList = function() { originalUpdatePlayerList.apply(this, arguments); updateDiceMaxValueInputBasedOnPlayers(); updateRollDiceButtonState(); }
+
+function toggleAutoCloseTimer() {
+    autoCloseTimerContainer.style.display = autoCloseModalCheckbox.checked ? 'flex' : 'none';
 }
 
 function clearPastedText() {
@@ -1054,42 +1969,35 @@ async function pasteFromClipboard() {
     }
 }
 
-// Event listeners
-addPlayerBtn.addEventListener('click', () => addPlayerToList(playerInput.value));
-playerInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        addPlayerToList(playerInput.value);
+function showLastDiceResult() {
+    if (gameState.roundsLogData.length === 0) {
+        return;
     }
-});
-addChallengeBtn.addEventListener('click', () => addChallengeToList(challengeNameInput.value, challengeDescriptionInput.value));
-startGameBtn.addEventListener('click', startGame);
-rollDiceBtn.addEventListener('click', handleDiceRoll);
-document.getElementById('error-ok-btn').addEventListener('click', hideErrorModal);
-document.getElementById('close-error-modal').addEventListener('click', hideErrorModal);
-languageToggle.addEventListener('click', toggleLanguage);
-themeToggle.addEventListener('click', toggleTheme);
-saveGameBtn.addEventListener('click', saveGame);
-saveButton.addEventListener('click', handleSaveGame);
-cancelSaveButton.addEventListener('click', () => saveGameModal.style.display = 'none');
-loadGameBtn.addEventListener('click', loadGame);
-loadFileInput.addEventListener('change', handleLoadGame);
-cancelLoadButton.addEventListener('click', () => loadGameModal.style.display = 'none');
-resetGameBtn.addEventListener('click', resetGame);
-closeDiceModalBtn.addEventListener('click', closeDiceModal);
-importChallengesBtn.addEventListener('click', showImportModal);
-saveListBtn.addEventListener('click', showSaveListModal);
-importFromFileBtn.addEventListener('change', importFromFile);
-importFromTextBtn.addEventListener('click', showPasteArea);
-confirmPasteBtn.addEventListener('click', loadFromPastedText);
-cancelImportBtn.addEventListener('click', hideImportModal);
-copyListTextBtn.addEventListener('click', copyListText);
-cancelSaveListBtn.addEventListener('click', hideSaveListModal);
-clearPastedTextBtn.addEventListener('click', clearPastedText);
-pasteClipboardBtn.addEventListener('click', pasteFromClipboard);
-editTitleBtn.addEventListener('click', toggleTitleEdit);
-saveTitleBtn.addEventListener('click', updateGameTitle);
-gameTitleInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        updateGameTitle();
+    
+    const lastRound = gameState.roundsLogData[gameState.roundsLogData.length - 1];
+    modalDiceContainer.innerHTML = lastRound.diceResult;
+
+    const diceElements = modalDiceContainer.querySelectorAll('.dice');
+    diceElements.forEach((dice, i) => {
+        if (dice.classList.contains('lowest-roll')) {
+            const playerNameDiv = dice.querySelector('.player-name');
+            if (playerNameDiv) {
+                const playerName = playerNameDiv.textContent;
+                const player = gameState.players.find(p => p.name === playerName);
+                if (player) {
+                    dice.addEventListener('click', () => showDicePopup(player));
+                }
+            }
+        }
+    });
+    
+    openDiceModal();
+    
+    if (autoCloseModalCheckbox.checked) {
+        autoCloseTimerContainer.style.display = 'flex';
+    } else {
+        autoCloseTimerContainer.style.display = 'none';
     }
-});
+}
+
+init();

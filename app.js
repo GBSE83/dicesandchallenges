@@ -1,6 +1,3 @@
-// Import the broadcast function from connection.js
-import { broadcastGameState } from './connection.js';
-
 // Game state variables
 const gameState = {
     gameTitle: "Juego de Dados y Pruebas",
@@ -184,7 +181,7 @@ const editTitleBtn = document.getElementById('edit-title-btn');
 const saveTitleBtn = document.getElementById('save-title-btn');
 
 let autoCloseTimer = null;
-let connectionState = window.connectionState || { role: 'host' }; // Use a global connectionState if available
+let connectionState = window.connectionState || { role: 'host' };
 
 // Initialize the game
 document.addEventListener('DOMContentLoaded', () => {
@@ -260,13 +257,14 @@ function updateGameFromHostData(hostGameState) {
     renderChallenges();
     updateCurrentChallengeDisplay();
     renderRoundsLog();
-    updateGameStatus(); // New call to update status
+    updateGameStatus();
     renderPlayerLevels();
-    
+
     // Reapply theme and language in case they were changed by the host
     applyTheme(gameState.isDarkMode);
     setLanguage(gameState.currentLanguage);
 }
+window.updateGameFromHostData = updateGameFromHostData; // Make it a global function
 
 // Function to make the page read-only for guests
 function makePageReadOnly() {
@@ -295,8 +293,8 @@ function updateGameTitle() {
         toggleTitleEdit();
         
         // Broadcast the updated state
-        if (connectionState.role === 'host') {
-            broadcastGameState(gameState);
+        if (window.connectionState.role === 'host' && window.broadcastGameState) {
+            window.broadcastGameState(gameState);
         }
     } else {
         showError('Por favor, introduce un título válido.');
@@ -335,8 +333,8 @@ function toggleLanguage() {
     setLanguage(gameState.currentLanguage);
     
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -346,8 +344,8 @@ function toggleTheme() {
     applyTheme(gameState.isDarkMode);
     
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -418,8 +416,8 @@ function handleDiceRoll() {
     showLastDiceResult();
 
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -434,16 +432,16 @@ function updateGameStatus() {
             gameStatus.innerHTML = `<span class="game-over">${translations[lang].gameOver}</span>`;
             
             // Broadcast the updated state
-            if (connectionState.role === 'host') {
-                broadcastGameState(gameState);
+            if (window.connectionState.role === 'host' && window.broadcastGameState) {
+                window.broadcastGameState(gameState);
             }
         } else if (activePlayersCount === 1) {
             const winner = gameState.players.find(p => !p.eliminated);
             gameStatus.innerHTML = `<span class="winner">${translations[lang].winner} ${winner.name}!</span>`;
             
             // Broadcast the updated state
-            if (connectionState.role === 'host') {
-                broadcastGameState(gameState);
+            if (window.connectionState.role === 'host' && window.broadcastGameState) {
+                window.broadcastGameState(gameState);
             }
         } else {
             gameStatus.textContent = `${activePlayersCount} de ${totalPlayersCount} jugadores en la partida. Ronda #${gameState.roundNumber + 1}.`;
@@ -570,7 +568,7 @@ function renderChallenges() {
         challengeList.appendChild(li);
     });
 
-    if (connectionState.role === 'host') {
+    if (window.connectionState.role === 'host') {
         new Sortable(challengeList, {
             animation: 150,
             onEnd: (evt) => {
@@ -578,7 +576,9 @@ function renderChallenges() {
                 gameState.challenges.splice(evt.newIndex, 0, movedItem);
                 
                 // Broadcast the updated state
-                broadcastGameState(gameState);
+                if (window.broadcastGameState) {
+                    window.broadcastGameState(gameState);
+                }
             }
         });
     }
@@ -638,8 +638,8 @@ function addPlayerToList(name) {
     playerInput.value = '';
     
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -655,8 +655,8 @@ function addChallengeToList(name, description) {
     challengeDescriptionInput.value = '';
     
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -667,8 +667,8 @@ function removePlayer(name) {
     updateGameStatus();
     
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -679,8 +679,8 @@ function removeChallenge(index) {
     updateCurrentChallengeDisplay();
     
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -727,8 +727,8 @@ function startGame() {
     updateCurrentChallengeDisplay();
     
     // Broadcast the updated state
-    if (connectionState.role === 'host') {
-        broadcastGameState(gameState);
+    if (window.connectionState.role === 'host' && window.broadcastGameState) {
+        window.broadcastGameState(gameState);
     }
 }
 
@@ -745,7 +745,7 @@ function hideErrorModal() {
 }
 
 function saveGame() {
-    if (connectionState.role === 'guest') {
+    if (window.connectionState.role === 'guest') {
         showError('Solo el anfitrión puede guardar la partida.');
         return;
     }
@@ -773,7 +773,7 @@ function handleSaveGame() {
 }
 
 function loadGame() {
-    if (connectionState.role === 'guest') {
+    if (window.connectionState.role === 'guest') {
         showError('Solo el anfitrión puede cargar una partida.');
         return;
     }
@@ -795,8 +795,8 @@ function handleLoadGame(event) {
             updateCurrentChallengeDisplay();
             renderRoundsLog();
             
-            if (connectionState.role === 'host') {
-                broadcastGameState(gameState);
+            if (window.connectionState.role === 'host' && window.broadcastGameState) {
+                window.broadcastGameState(gameState);
             }
 
             document.getElementById('load-modal').style.display = 'none';
@@ -811,7 +811,7 @@ function handleLoadGame(event) {
 }
 
 function resetGame() {
-    if (connectionState.role === 'guest') {
+    if (window.connectionState.role === 'guest') {
         showError('Solo el anfitrión puede reiniciar la partida.');
         return;
     }
@@ -845,8 +845,8 @@ function resetGame() {
         document.getElementById('import-challenges-btn').style.display = 'block';
         
         // Broadcast the updated state
-        if (connectionState.role === 'host') {
-            broadcastGameState(gameState);
+        if (window.connectionState.role === 'host' && window.broadcastGameState) {
+            window.broadcastGameState(gameState);
         }
     }
 }
@@ -927,7 +927,7 @@ function closeDiceModal() {
 }
 
 function showImportModal() {
-    if (connectionState.role === 'guest') {
+    if (window.connectionState.role === 'guest') {
         showError('Solo el anfitrión puede importar pruebas.');
         return;
     }
@@ -954,8 +954,8 @@ function importFromFile(event) {
                 importModal.style.display = 'none';
                 
                 // Broadcast the updated state
-                if (connectionState.role === 'host') {
-                    broadcastGameState(gameState);
+                if (window.connectionState.role === 'host' && window.broadcastGameState) {
+                    window.broadcastGameState(gameState);
                 }
             } else {
                 alert('El archivo no contiene un formato de lista de pruebas válido.');
@@ -984,8 +984,8 @@ function loadFromPastedText() {
             importModal.style.display = 'none';
             
             // Broadcast the updated state
-            if (connectionState.role === 'host') {
-                broadcastGameState(gameState);
+            if (window.connectionState.role === 'host' && window.broadcastGameState) {
+                window.broadcastGameState(gameState);
             }
         } else {
             alert('El texto no contiene un formato de lista de pruebas válido.');

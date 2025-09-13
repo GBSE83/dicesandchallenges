@@ -1,6 +1,4 @@
 // Real-time connection system for game.html
-import { updateGameFromHostData } from './app.js';
-
 let connectionState = {
     role: null, // 'host' or 'guest'
     name: '',
@@ -138,7 +136,9 @@ function initGuestConnection() {
             if (data.type === 'game-state-update') {
                 console.log("Received game state from host.");
                 // Update the game state with the received data
-                updateGameFromHostData(data.gameState);
+                if (window.updateGameFromHostData) {
+                    window.updateGameFromHostData(data.gameState);
+                }
             }
             if (data.type === 'host-ended-game') {
                 alert(data.message);
@@ -173,6 +173,7 @@ function broadcastGameState(gameState) {
         }
     });
 }
+window.broadcastGameState = broadcastGameState; // Make it a global function
 
 // Host ends the game for all connected guests
 function endHostGame() {
@@ -232,9 +233,8 @@ document.addEventListener('DOMContentLoaded', initConnection);
 // Setup periodic broadcast of game state for hosts
 setInterval(() => {
     if (connectionState.role === 'host' && connectionState.guestConnections.length > 0) {
-        broadcastGameState(window.gameState);
+        if (window.gameState) {
+            broadcastGameState(window.gameState);
+        }
     }
 }, 2000);
-
-// Export functions for use in app.js
-export { broadcastGameState, endHostGame };

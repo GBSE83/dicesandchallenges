@@ -83,6 +83,13 @@ function initHostConnection() {
         conn.on('data', data => {
             if (data.type === 'guest-join') {
                 console.log("Guest joined:", data.name);
+                // Send the current game state to the new guest
+                if (window.gameState) {
+                    conn.send({
+                        type: 'game-state-update',
+                        gameState: window.gameState
+                    });
+                }
             }
         });
         conn.on('close', () => {
@@ -103,23 +110,25 @@ function initHostConnection() {
 // Guest connection
 function initGuestConnection() {
     console.log("Initializing guest connection...");
-    connectionState.peer = new Peer(connectionState.name, {
+    // Create the Peer object with a unique ID (based on name and a random number)
+    connectionState.peer = new Peer(connectionState.name + '-' + Math.random().toString(36).substring(7), {
         host: 'peerjs-server.herokuapp.com',
         secure: true
     });
+    
+    showWaitingScreen();
 
     connectionState.peer.on('open', id => {
         console.log("My PeerJS ID is:", id);
         // Connect to the host
         connectionState.hostConnection = connectionState.peer.connect(connectionState.accessCode);
-
+        
         // Listen for when the connection is open
         connectionState.hostConnection.on('open', () => {
             console.log("Connected to host!");
             connectionState.isConnected = true;
             updateConnectionDisplay();
-            hideWaitingScreen();
-
+            
             // Send initial information to host
             connectionState.hostConnection.send({
                 type: 'guest-join',
@@ -137,6 +146,7 @@ function initGuestConnection() {
                 if (window.updateGameFromHostData) {
                     window.updateGameFromHostData(data.gameState);
                 }
+                hideWaitingScreen();
             }
             if (data.type === 'host-ended-game') {
                 alert(data.message);
@@ -151,11 +161,23 @@ function initGuestConnection() {
             alert("El anfitrión ha salido de la partida.");
             redirectToLanding();
         });
+
+        connectionState.hostConnection.on('error', err => {
+            console.error("Host connection error:", err);
+            hideWaitingScreen();
+            alert('Error de conexión con el anfitrión. Asegúrate de que el código sea correcto y el anfitrión esté en la partida.');
+            redirectToLanding();
+        });
     });
 
     connectionState.peer.on('error', err => {
         console.error("PeerJS error:", err);
-        alert('Error de conexión con el anfitrión. Asegúrate de que el código sea correcto y el anfitrión esté en la partida.');
+        hideWaitingScreen();
+        if (err.type === 'peer-unavailable') {
+            alert('El código de acceso no es válido o el anfitrión no está en línea.');
+        } else {
+            alert('Error de conexión con el servidor. Por favor, inténtalo de nuevo.');
+        }
         redirectToLanding();
     });
 }
@@ -225,14 +247,28 @@ function hideWaitingScreen() {
     }
 }
 
+function showWaitingScreen() {
+    // Create and show waiting modal
+    const waitingModal = document.createElement('div');
+    waitingModal.id = 'waiting-modal';
+    waitingModal.className = 'modal';
+    waitingModal.style.display = 'flex';
+    
+    const lang = connectionState.language;
+    waitingModal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>${lang === 'es' ? 'Conectando...' : 'Connecting...'}</h2>
+            </div>
+            <div class="modal-body">
+                <p>${lang === 'es' ? 'Esperando a que el anfitrión esté listo...' : 'Waiting for host to be ready...'}</p>
+                <div class="loader"></div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(waitingModal);
+}
+
 // Initialize the connection system when the page loads
 document.addEventListener('DOMContentLoaded', initConnection);
-
-// Setup periodic broadcast of game state for hosts
-setInterval(() => {
-    if (connectionState.role === 'host' && connectionState.guestConnections.length > 0) {
-        if (window.gameState) {
-            broadcastGameState(window.gameState);
-        }
-    }
-}, 2000);

@@ -263,6 +263,21 @@ function updateGameFromHostData(hostGameState) {
     // Reapply theme and language in case they were changed by the host
     applyTheme(gameState.isDarkMode);
     setLanguage(gameState.currentLanguage);
+
+    // Check game state to show/hide buttons
+    if (gameState.isGameStarted) {
+        startGameBtn.style.display = 'none';
+        rollDiceBtn.style.display = 'block';
+        document.getElementById('add-player-form').style.display = 'none';
+        document.getElementById('add-challenge-form').style.display = 'none';
+        document.getElementById('import-challenges-btn').style.display = 'none';
+    } else {
+        startGameBtn.style.display = 'block';
+        rollDiceBtn.style.display = 'none';
+        document.getElementById('add-player-form').style.display = 'block';
+        document.getElementById('add-challenge-form').style.display = 'block';
+        document.getElementById('import-challenges-btn').style.display = 'block';
+    }
 }
 window.updateGameFromHostData = updateGameFromHostData; // Make it a global function
 

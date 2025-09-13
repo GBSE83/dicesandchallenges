@@ -66,9 +66,6 @@ let landingState = {
     role: null,
     name: '',
     accessCode: '',
-    peer: null,
-    hostConnection: null,
-    connectedUsers: [],
     isDarkMode: false,
     currentLanguage: 'es'
 };
@@ -86,7 +83,6 @@ const accessCodeInput = document.getElementById('access-code-input');
 const codeDisplayContainer = document.getElementById('access-code-container');
 const generatedCodeSpan = document.getElementById('generated-code');
 const copyCodeBtn = document.getElementById('copy-code-btn');
-const connectedUsersList = document.getElementById('connected-users-list');
 const startAsHostBtn = document.getElementById('start-as-host-btn');
 const themeToggle = document.getElementById('theme-toggle');
 const languageToggle = document.getElementById('language-toggle');
@@ -127,7 +123,6 @@ function updateTextBasedOnLanguage() {
     document.getElementById('host-code-title').textContent = landingTranslations[lang].hostCodeTitle;
     document.getElementById('host-code-instructions').textContent = landingTranslations[lang].hostCodeInstructions;
     document.getElementById('copy-code-btn').textContent = landingTranslations[lang].copyCodeBtn;
-    document.getElementById('connected-users-title').textContent = landingTranslations[lang].connectedUsersTitle;
     document.getElementById('start-as-host-btn').textContent = landingTranslations[lang].startAsHostBtn;
     document.getElementById('host-note').textContent = landingTranslations[lang].hostStartNote;
     document.getElementById('landing-footer-text').innerHTML = `${landingTranslations[lang].footerText} &copy; ${new Date().getFullYear()}`;
@@ -165,19 +160,14 @@ function createHostGame() {
     // Generate a simple, unique access code
     const accessCode = Math.random().toString(36).substring(2, 6).toUpperCase();
     landingState.accessCode = accessCode;
-    landingState.name = playerName;
     
+    // Hide host creation form and show the start game button
     hostForm.style.display = 'none';
     guestOption.style.display = 'none';
     codeDisplayContainer.style.display = 'block';
     startAsHostBtn.style.display = 'block';
     
     generatedCodeSpan.textContent = accessCode;
-    
-    // The Peer object will be created on the next page
-    
-    // For local testing, we might need a small delay or a button to simulate
-    // guests joining, but for the final version, this is fine.
 }
 
 function startHostGame() {
@@ -203,45 +193,9 @@ function joinGuestGame() {
         return;
     }
     
-    // Show a loading screen while we try to connect
-    showWaitingScreen();
-    
-    const guestPeer = new Peer(playerName, {
-        host: 'peerjs-server.herokuapp.com',
-        secure: true
-    });
-    
-    guestPeer.on('open', id => {
-        console.log('Guest Peer ID:', id);
-        const hostConnection = guestPeer.connect(accessCode);
-        
-        hostConnection.on('open', () => {
-            console.log("Connected to host!");
-            const url = `game.html?role=guest&name=${encodeURIComponent(playerName)}&accessCode=${encodeURIComponent(accessCode)}&darkMode=${landingState.isDarkMode}&language=${landingState.currentLanguage}`;
-            window.location.href = url;
-        });
-        
-        hostConnection.on('error', err => {
-            console.error("Connection error:", err);
-            hideWaitingScreen();
-            showError(landingTranslations[landingState.currentLanguage].connectionErrorPrefix + err);
-        });
-        
-        hostConnection.on('close', () => {
-            console.log("Connection closed.");
-            hideWaitingScreen();
-        });
-    });
-    
-    guestPeer.on('error', err => {
-        console.error("PeerJS error:", err);
-        hideWaitingScreen();
-        if (err.type === 'peer-unavailable') {
-            showError("El código de acceso no es válido o el anfitrión no está en línea.");
-        } else {
-            showError("Error de conexión con el servidor. Por favor, inténtalo de nuevo.");
-        }
-    });
+    // Redirect immediately to the game page, which will handle the connection
+    const url = `game.html?role=guest&name=${encodeURIComponent(playerName)}&accessCode=${encodeURIComponent(accessCode)}&darkMode=${landingState.isDarkMode}&language=${landingState.currentLanguage}`;
+    window.location.href = url;
 }
 
 function copyAccessCode() {
@@ -262,43 +216,4 @@ function showError(message) {
 
 function hideError() {
     errorModal.style.display = 'none';
-}
-
-function showWaitingScreen() {
-    // Create and show waiting modal
-    const waitingModal = document.createElement('div');
-    waitingModal.id = 'waiting-modal';
-    waitingModal.className = 'modal';
-    waitingModal.style.display = 'flex';
-    
-    waitingModal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>${landingTranslations[landingState.currentLanguage].waitingForHostTitle}</h2>
-            </div>
-            <div class="modal-body">
-                <p>${landingTranslations[landingState.currentLanguage].waitingForHostMessage}</p>
-                <div class="loader"></div>
-                <button id="cancel-waiting-btn" class="btn">${landingTranslations[landingState.currentLanguage].cancelButton}</button>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(waitingModal);
-    
-    // Add event listener to cancel button
-    document.getElementById('cancel-waiting-btn').addEventListener('click', () => {
-        if (landingState.hostConnection) {
-            landingState.hostConnection.close();
-            landingState.hostConnection = null;
-        }
-        document.body.removeChild(waitingModal);
-    });
-}
-
-function hideWaitingScreen() {
-    const waitingModal = document.getElementById('waiting-modal');
-    if (waitingModal) {
-        waitingModal.parentNode.removeChild(waitingModal);
-    }
 }

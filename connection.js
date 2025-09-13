@@ -4,7 +4,6 @@ let connectionState = {
     name: '',
     accessCode: '',
     peer: null,
-    peerId: null,
     hostConnection: null,
     guestConnections: [],
     isConnected: false,
@@ -27,7 +26,6 @@ function initConnection() {
     connectionState.role = urlParams.get('role');
     connectionState.name = urlParams.get('name');
     connectionState.accessCode = urlParams.get('accessCode');
-    connectionState.peerId = urlParams.get('peerId');
     connectionState.language = urlParams.get('language') || 'es';
     connectionState.darkMode = urlParams.get('darkMode') === 'true';
     
@@ -67,7 +65,7 @@ function updateConnectionDisplay() {
 // Host connection
 function initHostConnection() {
     console.log("Initializing host connection...");
-    connectionState.peer = new Peer(connectionState.peerId, {
+    connectionState.peer = new Peer(connectionState.accessCode, {
         host: 'peerjs-server.herokuapp.com',
         secure: true
     });
@@ -97,7 +95,7 @@ function initHostConnection() {
 
     connectionState.peer.on('error', err => {
         console.error("PeerJS error:", err);
-        alert('Error de conexión. Asegúrate de que el ID de anfitrión es único y que el servidor está funcionando.');
+        alert('Error de conexión. Por favor, regresa al inicio y vuelve a crear la partida.');
         redirectToLanding();
     });
 }
